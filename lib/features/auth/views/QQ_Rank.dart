@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/GG_waiting.dart';
 import 'package:gat_helper_app/features/auth/views/correct_answers_page.dart';
 import 'package:gat_helper_app/features/auth/views/student.dart';
+import 'package:gat_helper_app/features/auth/views/student_req_page.dart';
 
 class RankPage extends StatefulWidget {
   @override
@@ -343,14 +344,24 @@ class _RankPageState extends State<RankPage> {
                   child: Text('Check Correct Answers', style: TextStyle(fontSize: 12)),
                 ),
                 SizedBox(width: 10),
-                Row(
+                GestureDetector(
+                 onTap: () {
+                  Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                    builder: (context) => Studentreq(), // Call by class name
+                ),
+                );
+                },
+                child:Row(
                   children: [
                     Icon(Icons.help_outline, color: Colors.white),
                     SizedBox(width: 5),
                     Text('Ask Tutor', style: TextStyle(color: Colors.white, fontSize: 14)),
                   ],
                 ),
-              ],
+                ), ],
+
             ),
           ],
         ),

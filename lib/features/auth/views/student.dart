@@ -3,6 +3,7 @@ import 'package:gat_helper_app/features/auth/views/AR_dashboard.dart';
 import 'package:gat_helper_app/features/auth/views/All_req_page.dart';
 import 'package:gat_helper_app/features/auth/views/GG_waiting.dart';
 import 'package:gat_helper_app/features/auth/views/find_game_page.dart';
+import 'package:gat_helper_app/features/auth/views/self_game_config.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
 
 import '../../common/edit_profile_page.dart';
@@ -199,7 +200,10 @@ class StudentHome extends State<StudentHomePage> {
                           ),
                           InkWell(
                                 onTap: () {
-                                  builder: (context) => LeaderWidget();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SelfgameconfigWidget()),
+                                  );
                                 },
                               child: ClipRRect(
                               borderRadius: BorderRadius.circular(90), // تغيير الرقم لضبط مقدار الانحناء
