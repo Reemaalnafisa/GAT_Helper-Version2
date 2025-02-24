@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  fl_chart: ^0.70.2
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +23,29 @@ flutter:
   assets:
     - assets/logo.png
     - assets/logo2.png
+    - assets/group_game.png
+    - assets/user_icon.png
+    - assets/blue.png
+    - assets/blue_background.png
+    - assets/rectangle1.png
+    - assets/student.png
+    - assets/parent1.png
+    - assets/parent2.png
+    - assets/self_game.png
+    - assets/BB.png
+    - assets/AR_rectangle.png
+    - assets/downblue_background.png
+    - assets/downgreen_background.png
+    - assets/rank1.png
+    - assets/rank2.png
+    - assets/rank3.png
+    - assets/Pink.png
+
+
+
+
+
+
     - assets/
     - assets/logo.png
     - assets/logo2.png
