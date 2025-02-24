@@ -10,7 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^1.0.0
   cupertino_icons: ^1.0.8
+  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:
@@ -22,3 +24,33 @@ flutter:
   assets:
     - assets/logo.png
     - assets/logo2.png
+    - assets/Mathremovebgpreview.png
+    - assets/rectangle.svg
+    - assets/rectangle4.svg
+    - assets/rectangle5.svg
+    - assets/rectangle6.svg
+    - assets/img_1.png
+    - assets/img_2.png
+    - assets/img_3.png
+    - assets/img_4.png
+    - assets/img_5.png
+    - assets/img_6.png
+    - assets/img_7.png
+    - assets/img_8.png
+    - assets/img_9.png
+    - assets/img_10.png
+    - assets/img_11.png
+    - assets/img_12.png
+    - assets/img_13.png
+    - assets/img_14.png
+    - assets/img_15.png
+    - assets/img_16.png
+    - assets/img_17.png
+    - assets/img_18.png
+    - assets/img_19.png
+    - assets/img_20.png
+    - assets/img_21.png
+    - assets/img_22.png
+    - assets/img_23.png
+    - assets/img_24.png
+    - assets/img_25.png
