@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/AR_dashboard.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
 import 'Parent_home_page.dart';
 import 'Parent_home_pageAR.dart';
@@ -327,7 +328,7 @@ class _ParentHomePageARState extends State<ParentHomePageAR> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ChildDashboardPage(childName: child["name"]!),
+                        builder: (context) => ARDashboard(),
                       ),
                     );
                   },

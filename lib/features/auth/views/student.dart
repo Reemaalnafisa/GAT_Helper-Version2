@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/AR_dashboard.dart';
+import 'package:gat_helper_app/features/auth/views/All_req_page.dart';
 import 'package:gat_helper_app/features/auth/views/GG_waiting.dart';
-import 'package:gat_helper_app/features/auth/views/Group_GameQ.dart';
-import 'package:gat_helper_app/features/common/sign_up_page.dart';
+import 'package:gat_helper_app/features/auth/views/find_game_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
+
 import '../../common/edit_profile_page.dart';
-import 'package:gat_helper_app/features/common/login_page.dart';
-import 'package:gat_helper_app/features/auth/views/Group_GameQ.dart';
-import 'package:gat_helper_app/features/common/sign_up_page.dart';
+
 import 'package:gat_helper_app/features/auth/views/DashBoard.dart';
 
 class StudentHomePage extends StatefulWidget {
@@ -87,7 +86,12 @@ class StudentHome extends State<StudentHomePage> {
                 leading: const Icon(Icons.messenger_outline, color: Colors.black),
                 title: const Text('Requests'),
                 onTap: () {
-                  _showContactUsDialog(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RequestsPage(),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -180,7 +184,7 @@ class StudentHome extends State<StudentHomePage> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => LeaderWidget()),
+                                MaterialPageRoute(builder: (context) => GroupGamePage()),
                               );
                             },
                             child: ClipRRect(
@@ -660,3 +664,4 @@ class StudentHome extends State<StudentHomePage> {
   }
 
 }
+

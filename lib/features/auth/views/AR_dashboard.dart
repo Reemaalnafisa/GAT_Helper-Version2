@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/const/data/AR_bar_graph_data.dart';
 import 'package:gat_helper_app/const/data/AR_line_chart_data.dart';
+import 'package:gat_helper_app/features/auth/views/Parent_home_pageAR.dart';
 import 'package:gat_helper_app/features/auth/views/student.dart';
 import 'package:gat_helper_app/model/BarGraphModel.dart';
 
@@ -89,7 +90,7 @@ class DashboardHeader extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => StudentHomePage()),
+                MaterialPageRoute(builder: (context) => ParentHomePageAR()),
               );
             },
           ),

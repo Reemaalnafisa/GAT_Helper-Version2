@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/student.dart';
 import 'package:gat_helper_app/features/common/Reset_pass_page.dart';
 import 'package:gat_helper_app/features/auth/views/Sign_up_page_AR.dart';
 import 'package:gat_helper_app/features/auth/views/login_page_AR.dart';
@@ -181,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const ParentHomePage()),);
+                              MaterialPageRoute(builder: (_) => const StudentHomePage()),);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black87,

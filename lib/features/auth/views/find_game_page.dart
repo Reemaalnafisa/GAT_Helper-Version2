@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/custom_group_game_page.dart';
 
 class GroupGamePage extends StatefulWidget {
   @override
@@ -83,7 +84,7 @@ class _GroupGamePageState extends State<GroupGamePage> {
                           // Navigate to Create Game Page
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CreateGamePage()),
+                            MaterialPageRoute(builder: (context) => CustomizeGamePage()),
                           );
                         },
                       ),

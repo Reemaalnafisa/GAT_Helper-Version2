@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/GG_waiting.dart';
 
 class CustomizeGamePage extends StatefulWidget {
   @override
@@ -110,7 +111,10 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
                           ),
                         ),
                         onPressed: () {
-                          // Action for creating the game
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LeaderWidget()),
+                          );
                         },
                         child: Text(
                           "CREATE",

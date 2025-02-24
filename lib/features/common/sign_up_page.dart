@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/student.dart';
 import 'package:gat_helper_app/features/common/login_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
 
@@ -157,7 +158,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 40.0,
                         width: screenWidth * 0.9, // Adjusted width
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (_) => const StudentHomePage()),);
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black87,
                             shape: RoundedRectangleBorder(

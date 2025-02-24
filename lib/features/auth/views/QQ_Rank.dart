@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/GG_waiting.dart';
+import 'package:gat_helper_app/features/auth/views/correct_answers_page.dart';
 import 'package:gat_helper_app/features/auth/views/student.dart';
 
 class RankPage extends StatefulWidget {
@@ -314,7 +315,26 @@ class _RankPageState extends State<RankPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CorrectAnswersPage(
+                          questions: [
+                            {
+                              "question": "What is the capital of France?",
+                              "correctAnswer": "Paris"
+                            },
+                            {
+                              "question": "What is 2 + 2?",
+                              "correctAnswer": "4"
+                            }
+                          ],
+                          userAnswers: ["Paris", "5"], // Example user answers
+                        ),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.blue,
                     backgroundColor: Colors.white,
