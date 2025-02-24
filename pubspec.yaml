@@ -10,9 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^1.0.0
   cupertino_icons: ^1.0.8
-  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +20,18 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/logo.png
+    - assets/logo2.png
+    - assets/
+    - assets/logo.png
+    - assets/logo2.png
+    - assets/upblue_background.png
+    - assets/downblue_background.png
+    - assets/yellow_background.png
+    - assets/Math.png
+    - assets/exit_logo.png
+    - assets/confetti.png
+    - assets/robot_image.png
     - assets/logo.png
     - assets/logo2.png
     - assets/Mathremovebgpreview.png

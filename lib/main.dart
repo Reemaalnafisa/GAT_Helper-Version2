@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/common/sign_up_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
+import 'package:gat_helper_app/features/common/sign_up_page.dart';
+import 'package:gat_helper_app/features/common/start_page.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
 import 'package:gat_helper_app/features/auth/views/student_req_page.dart';
 
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: EditProfilePage(role: 'tutor', initialData: {'rating': 2.1}, )
+      home: const StartPage()
 
     );
   }
