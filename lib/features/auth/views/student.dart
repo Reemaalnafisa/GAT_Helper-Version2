@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/AR_dashboard.dart';
 import 'package:gat_helper_app/features/auth/views/GG_waiting.dart';
 import 'package:gat_helper_app/features/auth/views/Group_GameQ.dart';
-import 'package:gat_helper_app/features/auth/views/sign_up_page.dart';
-import 'package:gat_helper_app/features/auth/views/start_page.dart';
+import 'package:gat_helper_app/features/common/sign_up_page.dart';
+import 'package:gat_helper_app/features/common/start_page.dart';
 import '../../common/edit_profile_page.dart';
-import 'login_page.dart';
-import 'package:gat_helper_app/features/auth/views/sign_up_page.dart';
-import 'package:gat_helper_app/features/auth/views/login_page.dart';
+import 'package:gat_helper_app/features/common/login_page.dart';
+import 'package:gat_helper_app/features/auth/views/Group_GameQ.dart';
+import 'package:gat_helper_app/features/common/sign_up_page.dart';
 import 'package:gat_helper_app/features/auth/views/DashBoard.dart';
 
 class StudentHomePage extends StatefulWidget {

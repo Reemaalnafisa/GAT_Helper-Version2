@@ -17,7 +17,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   String? _selectedGender;
   String? _selectedGrade;
-  final List<String> _genders = ['Male', 'Female', 'Other'];
+  final List<String> _genders = ['Male', 'Female'];
   final List<String> _grades = ['10', '11', '12']; // Grade levels for students
 
   @override
