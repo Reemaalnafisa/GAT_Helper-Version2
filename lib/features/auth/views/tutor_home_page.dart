@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/tutor_request_details_page.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -186,7 +187,7 @@ class TutorHomepage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        AcceptRejectPage(request: request),
+                                        RequestDetailsPage(),
                                   ),
                                 );
                               },

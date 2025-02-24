@@ -22,7 +22,7 @@ class _SelfgameconfigWidgetState extends State<SelfgameconfigWidget> {
           Positioned(
             top: -screenHeight * 0.10,
             left: -screenWidth * 0.8,
-            right: -screenWidth * 0.7,
+            right: -screenWidth * 0.8,
             child: Image.asset(
               'assets/upblue_background.png',
               fit: BoxFit.cover,
