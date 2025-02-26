@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/student.dart';
+import 'package:gat_helper_app/features/auth/views/student_req_page.dart';
 import 'self_game_page.dart'; // Import the game page widget
 import 'correct_answers_page.dart'; // Import the correct answers page
 
@@ -131,7 +133,7 @@ class ResultsWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'your Score',
+                      'Your Score',
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'DM Sans',
@@ -143,7 +145,7 @@ class ResultsWidget extends StatelessWidget {
               ),
             ),
 
-            // Results Box
+            //Results Box
             Positioned(
               top: 440,
               left: 30,
@@ -307,38 +309,36 @@ class ResultsWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      Icon(Icons.help, size: 24, color: Colors.black),
-                      SizedBox(height: 5),
-                      Text(
-                        'Ask a Tutor',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Inter',
-                          fontSize: 10,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Studentreq()), // Navigate to Tutor Page
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Icon(Icons.help, size: 24, color: Colors.black),
+                        SizedBox(height: 5),
+                        Text(
+                          'Ask a Tutor',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Inter',
+                            fontSize: 10,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context); // Navigate back to the home page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => StudentHomePage()), // Replace 'YourTargetPage' with the actual page widget
+                      );
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(60, 96, 170, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: Text(
-                      'Done',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                      ),
-                    ),
+                    child: Text('Done'),
                   ),
                 ],
               ),

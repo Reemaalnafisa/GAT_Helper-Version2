@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:gat_helper_app/features/auth/views/QQ_Rank.dart';
 
+import 'Ques_group.dart';
+
 class LeaderWidget extends StatefulWidget {
   @override
   _LeaderWidgetState createState() => _LeaderWidgetState();
@@ -211,7 +213,7 @@ class _LeaderWidgetState extends State<LeaderWidget> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RankPage()),
+                  MaterialPageRoute(builder: (context) => GroupGameques()),
                 );
               },
               style: ElevatedButton.styleFrom(

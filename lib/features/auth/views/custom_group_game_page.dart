@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/GG_waiting.dart';
+import 'package:gat_helper_app/features/auth/views/find_game_page.dart';
 
 class CustomizeGamePage extends StatefulWidget {
   @override
@@ -17,118 +18,116 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
     return Scaffold(
       body: Stack(
         children: [
-          // ✅ Green Topper PNG (Background)
+          // ✅ Background Image
           Positioned(
-            top: 0,
+            top: -40,
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/img_2.png', // ✅ Ensure this file exists in assets
+              'assets/img.png',
               width: double.infinity,
               fit: BoxFit.cover,
-
             ),
           ),
+
+          // ✅ Back Button
           Positioned(
             top: 50,
             left: 20,
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
+              icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
           ),
+
+          // ✅ Title
           Positioned(
-            top: 90,
+            top: 160,
             left: 20,
             child: Text(
               "Customize Your GROUP GAME!",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),
 
-          // ✅ Main Scrollable Content
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 150), // ✅ Space to move blue cards up
-
-                // ✅ Game Customization Options (Blue Cards)
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    children: [
-                      _buildOptionCard(
-                        "Type of questions?",
-                        [
-                          _buildRadioOption("Verbal", selectedQuestionType),
-                          _buildRadioOption("Quantitative", selectedQuestionType),
-                        ],
-                            (value) {
+          // ✅ Main Content
+          Positioned.fill(
+            top: 210,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    _buildOptionCard(
+                      "Type of questions?",
+                      [
+                        _buildRadioOption("Verbal", selectedQuestionType, (value) {
                           setState(() {
                             selectedQuestionType = value;
                           });
-                        },
-                      ),
-
-                      _buildOptionCard(
-                        "Number of questions?",
-                        [5, 10, 15, 20]
-                            .map((num) => _buildRadioOption(num, selectedQuestionNumber))
-                            .toList(),
-                            (value) {
+                        }),
+                        _buildRadioOption("Quantitative", selectedQuestionType, (value) {
                           setState(() {
-                            selectedQuestionNumber = value;
+                            selectedQuestionType = value;
                           });
-                        },
-                      ),
+                        }),
+                      ],
+                    ),
 
-                      _buildOptionCard(
-                        "Timer of Game?",
-                        [10, 15, 20, 30]
-                            .map((num) => _buildRadioOption(num, selectedTimer))
-                            .toList(),
-                            (value) {
-                          setState(() {
-                            selectedTimer = value;
-                          });
-                        },
-                      ),
+                    _buildOptionCard(
+                      "Number of questions?",
+                      [5, 10, 15, 20]
+                          .map((num) => _buildRadioOption(num, selectedQuestionNumber, (value) {
+                        setState(() {
+                          selectedQuestionNumber = value;
+                        });
+                      }))
+                          .toList(),
+                    ),
 
-                      // ✅ Participants Input
-                      _buildInputCard("Number of participants", "Up to 10..."),
+                    _buildOptionCard(
+                      "Timer of Game?",
+                      [10, 15, 20, 30]
+                          .map((num) => _buildRadioOption(num, selectedTimer, (value) {
+                        setState(() {
+                          selectedTimer = value;
+                        });
+                      }))
+                          .toList(),
+                    ),
 
-                      SizedBox(height: 10),
+                    // ✅ Participants Input
+                    _buildInputCard("Number of participants", "Up to 10..."),
 
-                      // ✅ Create Button
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFE8F1AE), // Light yellow button
-                          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LeaderWidget()),
-                          );
-                        },
-                        child: Text(
-                          "CREATE",
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                    SizedBox(height: 10),
+
+                    // ✅ Create Button
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFE8F1AE),
+                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LeaderWidget()),
+                        );
+                      },
+                      child: Text(
+                        "CREATE",
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                    ),
 
-                      SizedBox(height: 20),
-
-
-                    ],
-                  ),
+                    SizedBox(height: 20),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],
@@ -136,11 +135,8 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
     );
   }
 
-
-
-
   // ✅ Widget to Build Custom Option Cards
-  Widget _buildOptionCard(String title, List<Widget> options, Function onChanged) {
+  Widget _buildOptionCard(String title, List<Widget> options) {
     return Card(
       color: Colors.blue.shade50,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -161,8 +157,8 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
     );
   }
 
-  // ✅ Widget for Radio Button Options
-  Widget _buildRadioOption(dynamic value, dynamic groupValue) {
+  // ✅ Widget for Radio Button Options (FIXED)
+  Widget _buildRadioOption(dynamic value, dynamic groupValue, Function(dynamic) onChanged) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -171,11 +167,7 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
           groupValue: groupValue,
           activeColor: Colors.black,
           fillColor: MaterialStateProperty.all(Colors.black),
-          onChanged: (val) {
-            setState(() {
-              groupValue = val;
-            });
-          },
+          onChanged: onChanged, // ✅ Correctly updates the state
         ),
         Text(
           value.toString(),

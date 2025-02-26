@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/custom_group_game_page.dart';
 
+import 'GG_waiting.dart';
+import 'Ques_group.dart';
+
 class GroupGamePage extends StatefulWidget {
   @override
   _GroupGamePageState createState() => _GroupGamePageState();
@@ -11,7 +14,7 @@ class _GroupGamePageState extends State<GroupGamePage> {
 
   final List<Map<String, dynamic>> groupGames = [
     {"id": 1, "name": "Lama Saud", "type": "Verbal Questions", "players": "8 / 10", "time": "5"},
-    {"id": 2, "name": "Abdullah Fahad", "type": "Verbal and Quantitative Questions", "players": "4 / 10", "time": "10"},
+    {"id": 2, "name": "Abdullah Fahad", "type": "Verbal & Quantitative Questions", "players": "4 / 10", "time": "10"},
     {"id": 3, "name": "Layan Ahmed", "type": "Quantitative Questions", "players": "3 / 5", "time": "15"},
     {"id": 4, "name": "Yara Bader", "type": "Quantitative Questions", "players": "3 / 7", "time": "10"},
     {"id": 5, "name": "Mohamed Yaser", "type": "Quantitative Questions", "players": "2 / 10", "time": "5"},
@@ -23,52 +26,66 @@ class _GroupGamePageState extends State<GroupGamePage> {
     return Scaffold(
       body: Column(
         children: [
-          // ✅ PNG Header Image at the Top
-          Image.asset(
-            'assets/img.png', // Make sure this file exists in your assets folder
-            width: double.infinity,
-            fit: BoxFit.cover,
+          // ✅ Back Arrow Overlayed on Top of the Image
+          Stack(
+            children: [
+              // ✅ Background Image
+              Image.asset(
+                'assets/img.png',
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+
+              // ✅ Back Button Positioned on Top of the Image
+              Positioned(
+                top: 40, // Adjust for better placement
+                left: 16,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context), // Navigate back
+                  child:Icon(Icons.arrow_back, color: Colors.black, size: 24),
+                  ),
+                ),
+            ],
           ),
 
           // ✅ Title + Input Field + "+" Button
           Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0), // 🔼 Moves it up but keeps spacing
+            padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // ✅ Aligns title to the left
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Find Your Group Game!",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10), // 🔼 Keeps a small gap below the title
+                SizedBox(height: 10),
 
                 // Input Field & "+" Button
                 Row(
                   children: [
-                    // Input Field with Submit Button Inside
                     Expanded(
                       child: TextField(
                         controller: _codeController,
                         decoration: InputDecoration(
                           hintText: "Enter a Code...",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25), // ✅ Rounder corners
-                            borderSide: BorderSide(color: Colors.black, width: 2), // ✅ Black border
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(color: Colors.black, width: 2),
                           ),
                           filled: true,
                           fillColor: Colors.white,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15), // ✅ Adjust padding
-
-                          // ✅ Arrow Icon inside TextField (on the right)
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.arrow_forward_ios, color: Colors.black), // ✅ Arrow icon
+                            icon: Icon(Icons.arrow_forward_ios, color: Colors.black),
                             onPressed: () {
-                              // Action when arrow is clicked
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => GroupGameques()),
+                              );
                             },
                           ),
                         ),
-                      )
-
+                      ),
                     ),
                     SizedBox(width: 10),
 
@@ -81,7 +98,6 @@ class _GroupGamePageState extends State<GroupGamePage> {
                       child: IconButton(
                         icon: Icon(Icons.add, color: Colors.white),
                         onPressed: () {
-                          // Navigate to Create Game Page
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CustomizeGamePage()),
@@ -137,12 +153,23 @@ class _GroupGamePageState extends State<GroupGamePage> {
                                 game["players"],
                                 style: TextStyle(color: Colors.black),
                               ),
-                              SizedBox(width: 15),
+                              SizedBox(width: 7),
                               Icon(Icons.timer, color: Colors.black, size: 16),
                               SizedBox(width: 5),
                               Text(
                                 game["time"] + " min",
                                 style: TextStyle(color: Colors.black),
+                              ),
+                              SizedBox(width: 7), // Spacing before the game code
+                              Row(
+                                children: [
+                                  Icon(Icons.vpn_key, color: Colors.black, size: 16), // Key icon
+                                  SizedBox(width: 5),
+                                  Text(
+                                    "Code: ${game["code"]}", // Display game code
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -150,6 +177,10 @@ class _GroupGamePageState extends State<GroupGamePage> {
                       ),
                       trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LeaderWidget()),
+                        );
                         // Navigate to game details page
                       },
                     ),

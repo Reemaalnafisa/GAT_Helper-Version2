@@ -13,6 +13,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   fl_chart: ^0.70.2
   flutter_rating_bar: ^4.0.1
+  sqflite: ^2.3.0  # ✅ SQLite database for Flutter
+  path_provider: ^2.0.15
 
 dev_dependencies:
   flutter_test:

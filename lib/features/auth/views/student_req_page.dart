@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/student.dart';
 
 class Studentreq extends StatefulWidget {
   const Studentreq({super.key});
@@ -183,7 +184,21 @@ class _StudentreqState extends State<Studentreq> {
                         width: 200,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Your action goes here (e.g., Log In or something else)
+                            // Show a SnackBar for confirmation
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Request sent successfully!'),
+                                duration: Duration(seconds: 2), // How long the message is displayed
+                              ),
+                            );
+
+                            // Delay the navigation so the user sees the notification first
+                            Future.delayed(Duration(seconds: 2), () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => StudentHomePage()), // Replace with your target page
+                              );
+                            });
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.lightGreen, // Green color
@@ -201,6 +216,7 @@ class _StudentreqState extends State<Studentreq> {
                             ),
                           ),
                         ),
+
                       ),
                     ),
                   ],
