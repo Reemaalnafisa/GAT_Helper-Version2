@@ -145,10 +145,10 @@ class StudentHome extends State<StudentHomePage> {
           ),
         ),
             Positioned(
-              top: 10,
-              right: 5,
+              top: 30,
+              right: 12,
               child: CircleAvatar(
-                radius: 30,
+                radius: 25,
                 backgroundImage: AssetImage("assets/student.png"),
               ),
             ),
@@ -168,7 +168,7 @@ class StudentHome extends State<StudentHomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 80),
+                      const SizedBox(height: 50),
                       const Text(
                         "Select Your Game",
                         style: TextStyle(
@@ -191,8 +191,8 @@ class StudentHome extends State<StudentHomePage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(90),
                               child: Ink.image(
-                                image: AssetImage('assets/group_game.png'),
-                                height: 210,
+                                image: AssetImage('assets/img_27.png'),
+                                height: 230,
                                 width: 170,
                                 fit: BoxFit.cover,
                               ),
@@ -208,8 +208,8 @@ class StudentHome extends State<StudentHomePage> {
                               child: ClipRRect(
                               borderRadius: BorderRadius.circular(90), // تغيير الرقم لضبط مقدار الانحناء
                               child: Ink.image(
-                                image: AssetImage('assets/self_game.png'),
-                                height: 210,
+                                image: AssetImage('assets/img_26.png'),
+                                height: 230,
                                 width: 170,
                                 fit: BoxFit.cover,
                               ),
@@ -321,7 +321,7 @@ class StudentHome extends State<StudentHomePage> {
 
     Column(
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 80),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -361,7 +361,7 @@ class StudentHome extends State<StudentHomePage> {
         width: 350,  // زيادة العرض
         height: 170, // زيادة الارتفاع لاستيعاب التاريخ
         decoration: BoxDecoration(
-          color: Colors.orange.shade200,
+          color: Colors.orange.shade200.withOpacity(0.5),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -547,7 +547,7 @@ class StudentHome extends State<StudentHomePage> {
   Widget _buildParentCard(
       String name, String email, String status, String gender, Function(String) onStatusChanged) {
     return Container(
-      margin: EdgeInsets.only(top: 6, left: 10),
+      margin: EdgeInsets.only(top: 6, left: 15),
       width: 170,
       height: 120,
 
@@ -572,7 +572,7 @@ class StudentHome extends State<StudentHomePage> {
               radius: 20,
               backgroundColor: Colors.white70,
               backgroundImage: AssetImage(
-                gender == "male" ? "assets/parent1.png" : "assets/parent2.png",
+                gender == "male" ? "assets/parent1.png" : "assets/img_28.png",
               ),
             ),
           ),
@@ -606,7 +606,7 @@ class StudentHome extends State<StudentHomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 60),
+                SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(

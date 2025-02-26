@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/AR_dashboard.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
+import '../../common/edit_profileAR_page.dart';
 import 'Parent_home_page.dart';
 import 'Parent_home_pageAR.dart';
 import '../../common/login_page.dart';
@@ -101,7 +102,7 @@ class _ParentHomePageARState extends State<ParentHomePageAR> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditProfilePage(role: 'parent', initialData: {}),
+                    builder: (context) => EditProfilePageAR(role: 'parent', initialData: {}),
                   ),
                 );
               },
@@ -128,7 +129,7 @@ class _ParentHomePageARState extends State<ParentHomePageAR> {
             const Spacer(),
             ListTile(
               leading: Padding(
-                padding: const EdgeInsets.only(left: 85.5),
+                padding: const EdgeInsets.only(right: 85.5),
                 child: Image.asset(
                   'assets/img_18.png',
                   width: 40,

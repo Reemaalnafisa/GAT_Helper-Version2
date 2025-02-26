@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'Reset_pass_page.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -19,6 +18,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? selectedGender;
   String? selectedGrade;
   double tutorRating = 0.0; // Default rating (will be updated)
+
+  // Sample children data for the parent
+  List<Map<String, String>> childrenList = [
+    {'name': 'John Doe', 'avatar': 'assets/profile_placeholder.png'},
+    {'name': 'Jane Smith', 'avatar': 'assets/profile_placeholder.png'},
+  ];
 
   @override
   void initState() {
@@ -53,6 +58,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     };
     print('Saved Data: $updatedData');
   }
+
   // Function to create star icons based on rating
   Widget buildStarRating(double rating) {
     return Row(
@@ -67,25 +73,46 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
+  // Function to delete a child from the list
+  void deleteChild(int index) {
+    setState(() {
+      childrenList.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SingleChildScrollView( // Make the whole page scrollable
         child: Column(
           children: [
-            // Background Image
-            SizedBox(
+            // Profile Section
+            Container(
+              height: 170,
               width: screenWidth,
-              height: 200,
-              child: Image.asset(
-                'assets/img_25.png',
-                fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/img_25.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40.0, left: 16),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
               ),
             ),
 
-            // Profile Avatar
+            // Profile Avatar Section
             Transform.translate(
               offset: Offset(0, -50),
               child: Column(
@@ -94,7 +121,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     radius: 50,
                     backgroundImage: AssetImage('assets/profile_placeholder.png'),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 10),
                   TextButton(
                     onPressed: () {},
                     child: Text(
@@ -112,27 +139,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
 
-            // Form Fields
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                
-                children: [
+        // Form Fields Section
+        Transform.translate(  // Apply translation to the entire form to move it up
+          offset: Offset(0, -50),  // Adjust the value to move it up further
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                   TextFormField(
                     controller: nameController,
                     decoration: InputDecoration(labelText: 'Name'),
                   ),
-
                   SizedBox(height: 12),
                   TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(labelText: 'Email'),
                   ),
-
                   SizedBox(height: 12),
-
-                  // Password Field with Pencil Icon
                   Row(
                     children: [
                       Expanded(
@@ -140,7 +164,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           controller: passwordController,
                           obscureText: true,
                           decoration: InputDecoration(labelText: 'Password'),
-                          enabled: false, // Make it non-editable
+                          enabled: false,
                         ),
                       ),
                       IconButton(
@@ -154,7 +178,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ],
                   ),
-
                   if (widget.role == 'student') ...[
                     SizedBox(height: 12),
                     DropdownButtonFormField(
@@ -170,7 +193,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       },
                     ),
                   ],
-
                   SizedBox(height: 12),
                   DropdownButtonFormField(
                     value: selectedGender,
@@ -184,11 +206,49 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       });
                     },
                   ),
-
+                  if (widget.role == 'parent') ...[
+                    SizedBox(height: 12),
+                    Text(
+                      'Children',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 8,
+                      children: List.generate(childrenList.length, (index) {
+                        final child = childrenList[index];
+                        return Card(
+                          elevation: 4,
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          child: Container(
+                            width: 120,
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundImage: AssetImage(child['avatar']!),
+                                ),
+                                SizedBox(height: 8),
+                                Text(child['name']!, style: TextStyle(fontSize: 14)),
+                                SizedBox(height: 8),
+                                IconButton(
+                                  icon: Icon(Icons.close, color: Colors.red),
+                                  onPressed: () => deleteChild(index),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
                   SizedBox(height: 20),
                   Center(
                     child: SizedBox(
-                      width: screenWidth * 0.8, // Make button longer
+                      width: screenWidth * 0.8,
                       child: ElevatedButton(
                         onPressed: saveChanges,
                         style: ElevatedButton.styleFrom(
@@ -202,16 +262,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ),
                   ),
-
                   SizedBox(height: 20),
                 ],
               ),
             ),
-          ],
+        ),],
         ),
       ),
     );
   }
 }
-
-

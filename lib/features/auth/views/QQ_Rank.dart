@@ -36,26 +36,31 @@ class _RankPageState extends State<RankPage> {
       'rank': 4,
     },
     {
-      'name': 'Ahmed',
+      'name': 'Ahmed A',
       'points': '448 points',
       'avatar': 'assets/student.png',
       'rank': 5,
     },
     {
-      'name': 'Ahmed',
+      'name': 'Ahmed B',
       'points': '448 points',
       'avatar': 'assets/student.png',
       'rank': 6,
     },
     {
-      'name': 'Ahmed',
+      'name': 'Ahmed C',
       'points': '448 points',
+      'avatar': 'assets/student.png',
+      'rank': 7,
+    },
+    {
+      'name': 'Laila',
+      'points': '300 points',
       'avatar': 'assets/student.png',
       'rank': 8,
     },
   ];
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,11 +76,10 @@ class _RankPageState extends State<RankPage> {
                 Column(
                   children: [
                     SizedBox(height: 10),
-                    // Show the top 3 contestants and columns
                     _buildTopThreeSection(),
                   ],
                 ),
-                // 1) Pink box at the bottom
+                // Pink box at the bottom
                 Positioned(
                   bottom: 0,
                   left: 0,
@@ -91,91 +95,89 @@ class _RankPageState extends State<RankPage> {
                     ),
                   ),
                 ),
-                // Add ListView below the pink box
+                // Add ListView inside the pink container but make sure it doesn't overflow
                 Positioned(
-                  top: 290, // Start from below the pink box
+                  top: 330, // Adjust the starting position to fit inside the pink area
                   left: 0,
                   right: 0,
-                  bottom: 0, // Allow the ListView to scroll
-                  child: ListView.builder(
-                    itemCount: contestants.length - 3, // Remaining contestants
-                    itemBuilder: (context, index) {
-                      var contestant = contestants[index + 3]; // Start from rank 4
-                      return _buildAdditionalRank(
-                        contestant['name'],
-                        contestant['points'],
-                        contestant['avatar'],
-                        contestant['rank'],
-                      );
-                    },
+                  bottom: 0,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                    child: ListView.builder(
+                      itemCount: contestants.length - 3, // Remaining contestants
+                      itemBuilder: (context, index) {
+                        var contestant = contestants[index + 3]; // Start from rank 4
+                        return _buildAdditionalRank(
+                          contestant['name'],
+                          contestant['points'],
+                          contestant['avatar'],
+                          contestant['rank'],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ],
             ),
           ),
+
         ],
       ),
     );
   }
 
-
-  // Top 3 section (images + columns)
   Widget _buildTopThreeSection() {
     return Column(
       children: [
-        // Top 3 contestants images
+        // Top 3 contestants images with more space between them
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (contestants[0]['rank'] <= 3)
-              _buildRankInfo(contestants[0]['name'], contestants[0]['points'], contestants[0]['avatar']),
-            SizedBox(width: 25),
-            if (contestants[1]['rank'] <= 3)
-              _buildRankInfo(contestants[1]['name'], contestants[1]['points'], contestants[1]['avatar']),
-            SizedBox(width: 25),
-            if (contestants[2]['rank'] <= 3)
-              _buildRankInfo(contestants[2]['name'], contestants[2]['points'], contestants[2]['avatar']),
+            _buildRankInfo(contestants[1]['name'], contestants[1]['points'], contestants[1]['avatar'],1),
+            SizedBox(width: 40),  // Increased space between avatars
+            _buildRankInfo(contestants[0]['name'], contestants[0]['points'], contestants[0]['avatar'],2),
+            SizedBox(width: 40),  // Increased space between avatars
+            _buildRankInfo(contestants[2]['name'], contestants[2]['points'], contestants[2]['avatar'],3),
           ],
         ),
-
         SizedBox(height: 10),
-        // Top 3 columns
+        // Top 3 columns with the 3rd column moved down more
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildRankColumn(2, 'assets/rank2.png'),
             _buildRankColumn(1, 'assets/rank1.png'),
-            _buildRankColumn(3, 'assets/rank3.png'),
+            // Third column shifted down more controlled
+            Container(
+              height: 250, // Keep the same height as other columns
+              padding: EdgeInsets.only(top: 50), // Adjusted padding to move the 3rd column lower
+              child: _buildRankColumn(3, 'assets/rank3.png'),
+            ),
           ],
         ),
       ],
     );
   }
 
-  // Section for contestants with rank 4 and above
-  Widget _buildOtherContestantsSection() {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: contestants.length - 3, // Remaining contestants
-        itemBuilder: (context, index) {
-          var contestant = contestants[index + 3]; // Start from rank 4
-          return _buildAdditionalRank(
-            contestant['name'],
-            contestant['points'],
-            contestant['avatar'],
-            contestant['rank'],
-          );
-        },
-      ),
-    );
-  }
 
-  Widget _buildRankInfo(String name, String points, String avatarImage) {
+  Widget _buildRankInfo(String name, String points, String avatarImage, int rank) {
+    double topPadding = 0.0;
+    if (rank == 1) {
+      topPadding = 20;
+    }else if(rank == 3){
+      topPadding=30;
+    }
     return Column(
       children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundImage: AssetImage(avatarImage),
+        Padding(
+          padding: EdgeInsets.only(top: topPadding),  // Apply the conditional padding here
+          child: CircleAvatar(
+            radius: 30,
+            backgroundImage: AssetImage(avatarImage),
+          ),
         ),
         SizedBox(height: 5),
         Text(
@@ -200,6 +202,8 @@ class _RankPageState extends State<RankPage> {
       height = 250.0;
     } else if (rank == 2) {
       height = 200.0;
+    } else {
+      height = 250;
     }
 
     return Container(
@@ -269,14 +273,12 @@ class _RankPageState extends State<RankPage> {
     );
   }
 
-  // Function for congratulations and score
   Widget _buildCongratsAndScore() {
     return Stack(
       children: [
-        // المحتوى الأساسي
         Column(
           children: [
-            SizedBox(height: 50),  // Adjust this height to move content down
+            SizedBox(height: 50),
             Center(
               child: Text(
                 'Congratulations!',
@@ -322,16 +324,10 @@ class _RankPageState extends State<RankPage> {
                       MaterialPageRoute(
                         builder: (context) => CorrectAnswersPage(
                           questions: [
-                            {
-                              "question": "What is the capital of France?",
-                              "correctAnswer": "Paris"
-                            },
-                            {
-                              "question": "What is 2 + 2?",
-                              "correctAnswer": "4"
-                            }
+                            {"question": "What is the capital of France?", "correctAnswer": "Paris"},
+                            {"question": "What is 2 + 2?", "correctAnswer": "4"}
                           ],
-                          userAnswers: ["Paris", "5"], // Example user answers
+                          userAnswers: ["Paris", "5"],
                         ),
                       ),
                     );
@@ -345,30 +341,28 @@ class _RankPageState extends State<RankPage> {
                 ),
                 SizedBox(width: 10),
                 GestureDetector(
-                 onTap: () {
-                  Navigator.push(
-                   context,
-                   MaterialPageRoute(
-                    builder: (context) => Studentreq(), // Call by class name
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Studentreq(),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.help_outline, color: Colors.white),
+                      SizedBox(width: 5),
+                      Text('Ask Tutor', style: TextStyle(color: Colors.white, fontSize: 14)),
+                    ],
+                  ),
                 ),
-                );
-                },
-                child:Row(
-                  children: [
-                    Icon(Icons.help_outline, color: Colors.white),
-                    SizedBox(width: 5),
-                    Text('Ask Tutor', style: TextStyle(color: Colors.white, fontSize: 14)),
-                  ],
-                ),
-                ), ],
-
+              ],
             ),
           ],
         ),
-
-        // الأيقونات الثابتة في الأعلى
         Positioned(
-          top: 20, // Adjust this to position icons correctly
+          top: 20,
           left: 10,
           child: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white, size: 35),
@@ -381,7 +375,7 @@ class _RankPageState extends State<RankPage> {
           ),
         ),
         Positioned(
-          top: 20, // Adjust this to position icons correctly
+          top: 20,
           right: 10,
           child: IconButton(
             icon: Icon(Icons.refresh, color: Colors.white, size: 35),
@@ -396,5 +390,4 @@ class _RankPageState extends State<RankPage> {
       ],
     );
   }
-
 }

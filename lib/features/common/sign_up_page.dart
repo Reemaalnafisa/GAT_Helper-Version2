@@ -5,6 +5,7 @@ import 'package:gat_helper_app/features/common/login_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
 
 import '../auth/views/Sign_up_page_AR.dart';
+import '../auth/views/tutor_home_page.dart';
 
 class SignUpPage extends StatefulWidget {
   final String userRole; // User Role parameter
@@ -31,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
         children: [
           // Background Images in a Column
           Positioned(
-            top: -screenHeight * 0.10,
+            top: -screenHeight * 0.15,
             left: -screenWidth * 0.8,
             right: -screenWidth * 0.8,
             child: Image.asset(
@@ -42,7 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            bottom: screenHeight * 0,
+            bottom: -screenHeight * 0.04,  // Decrease the negative value to move the image up
             left: -screenWidth * 0.1,
             right: -screenWidth * 0.1,
             child: Image.asset(
@@ -53,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            bottom: 0,
+            bottom: -screenHeight * 0.02,  // Moved this image further up by decreasing the negative value
             left: -screenWidth * 0.1,
             right: -screenWidth * 0.1,
             child: Image.asset(
@@ -64,7 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           Positioned(
-            bottom: -screenHeight * 0.12,
+            bottom: -screenHeight * 0.13,  // Moved this image a bit up as well
             left: -screenWidth * 0.1,
             right: -screenWidth * 0.1,
             child: Image.asset(
@@ -74,6 +75,8 @@ class _SignUpPageState extends State<SignUpPage> {
               height: screenHeight * 0.3,
             ),
           ),
+
+
 
           // SafeArea for Back Button to ensure it's always on top
           SafeArea(
@@ -100,7 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 120),
                     Center(
                       child: Text(
                         'Welcome!',
@@ -114,7 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600, height: -3),
                       ),
                     ),
-                    const SizedBox(height: 39.0),
+                    const SizedBox(height: 3.0),
 
                     // Name Input
                     _buildLabel('Name'),
@@ -159,9 +162,18 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: screenWidth * 0.9, // Adjusted width
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (_) => const StudentHomePage()),);
+                            // Navigate to the corresponding home page based on the userRole
+                            if (widget.userRole == 'student') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => const StudentHomePage()),
+                              );
+                            } else if (widget.userRole == 'tutor') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => TutorHomepage()),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black87,
@@ -233,7 +245,7 @@ class _SignUpPageState extends State<SignUpPage> {
   // Helper method to build input labels
   Widget _buildLabel(String text) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5.0, bottom: 4.0),
+      padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
       child: Text(text, style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
     );
   }

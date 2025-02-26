@@ -4,6 +4,7 @@ import 'package:gat_helper_app/features/common/login_page.dart';
 import 'package:gat_helper_app/features/common/sign_up_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
 
+import 'Parent_home_pageAR.dart';
 import 'login_page_AR.dart';
 
 class SignUpPageAR extends StatefulWidget {
@@ -16,7 +17,7 @@ class SignUpPageAR extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPageAR> {
   String? _selectedGender;
-  final List<String> _items = ['ذكر', 'أنثى', 'آخر'];
+  final List<String> _items = ['ذكر', 'أنثى'];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class _SignUpPageState extends State<SignUpPageAR> {
           children: [
             // Background Decorations
             Positioned(
-              top: -screenHeight * 0.10,
+              top: -screenHeight * 0.15,
               left: -screenWidth * 0.8,
               right: -screenWidth * 0.8,
               child: Image.asset(
@@ -41,7 +42,7 @@ class _SignUpPageState extends State<SignUpPageAR> {
               ),
             ),
             Positioned(
-              bottom: screenHeight * 0,
+              bottom: -screenHeight * 0.04,  // Decrease the negative value to move the image up
               left: -screenWidth * 0.1,
               right: -screenWidth * 0.1,
               child: Image.asset(
@@ -52,7 +53,7 @@ class _SignUpPageState extends State<SignUpPageAR> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: -screenHeight * 0.02,  // Moved this image further up by decreasing the negative value
               left: -screenWidth * 0.1,
               right: -screenWidth * 0.1,
               child: Image.asset(
@@ -63,7 +64,7 @@ class _SignUpPageState extends State<SignUpPageAR> {
               ),
             ),
             Positioned(
-              bottom: -screenHeight * 0.12,
+              bottom: -screenHeight * 0.13,  // Moved this image a bit up as well
               left: -screenWidth * 0.1,
               right: -screenWidth * 0.1,
               child: Image.asset(
@@ -100,12 +101,12 @@ class _SignUpPageState extends State<SignUpPageAR> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(height: 30.0),
+                      const SizedBox(height: 120),
                       Center(
                         child: Text(
                           'أهلا وسهلا!',
                           style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 24.0,
                             fontWeight: FontWeight.w600,
                             height: -7,
                           ),
@@ -123,15 +124,15 @@ class _SignUpPageState extends State<SignUpPageAR> {
                         ),
                       ),
 
-                      const SizedBox(height: 35.0),
+                      const SizedBox(height: 3.0),
 
 
                       // إدخال الاسم
                       const Text(
                         'الاسم',
-                        style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 16.0),
                       ),
-                      const SizedBox(height: 5.0), // Top padding
+                      const SizedBox(height: 1.0), // Top padding
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: ' أدخل اسمك',
@@ -141,16 +142,17 @@ class _SignUpPageState extends State<SignUpPageAR> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 10.0),
                         ),
                       ),
-                      const SizedBox(height: 4.0), // Bottom padding
+                      const SizedBox(height: 1.0), // Bottom padding
 
                       //const SizedBox(height: 10.0),
 
                       // إدخال البريد الإلكتروني
                       const Text(
                         'البريد الإلكتروني',
-                        style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 16.0),
                       ),
-                      const SizedBox(height: 5.0), // Top padding
+                      const SizedBox(height: 1.0), // Top padding
+
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: ' أدخل بريدك الإلكتروني',
@@ -160,16 +162,16 @@ class _SignUpPageState extends State<SignUpPageAR> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 10.0),
                         ),
                       ),
-                      const SizedBox(height: 4.0), // Bottom padding
+                      const SizedBox(height: 1.0), // Bottom padding
 
                       //const SizedBox(height: 10.0),
 
                       // إدخال كلمة المرور
                       const Text(
                         'كلمة المرور',
-                        style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 16.0),
                       ),
-                      const SizedBox(height: 5.0), // Top padding
+                      const SizedBox(height: 1.0), // Top padding
                       TextFormField(
                         obscureText: true, // This will hide the password text
                         decoration: InputDecoration(
@@ -180,16 +182,16 @@ class _SignUpPageState extends State<SignUpPageAR> {
                           contentPadding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 10.0),
                         ),
                       ),
-                      const SizedBox(height: 4.0), // Bottom padding
+                      const SizedBox(height: 1.0), // Bottom padding
 
                       //const SizedBox(height: 10.0),
 
                       // اختيار الجنس
                       const Text(
                         'الجنس',
-                        style: TextStyle(fontSize: 18.0),
+                        style: TextStyle(fontSize: 16.0),
                       ),
-                      const SizedBox(height: 5.0), // Top padding
+                      const SizedBox(height: 1.0), // Top padding
                       DropdownButtonFormField<String>(
                         value: _selectedGender,
                         decoration: InputDecoration(
@@ -218,7 +220,12 @@ class _SignUpPageState extends State<SignUpPageAR> {
                           height: 48.0,
                           width: double.maxFinite,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => const ParentHomePageAR()),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black87,
                               shape: RoundedRectangleBorder(
@@ -270,7 +277,7 @@ class _SignUpPageState extends State<SignUpPageAR> {
             // Language Toggle Button, show only for Parent Role
             if (widget.userRole == 'parent')
               Positioned(
-                bottom: screenHeight * 0.15, // Adjusted to bring it closer to the bottom
+                bottom: screenHeight * 0.12, // Adjusted to bring it closer to the bottom
                 left: screenWidth * 0.40,    // Centered horizontally
                 child: Center(
                   child: IconButton(
