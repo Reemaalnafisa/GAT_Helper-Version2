@@ -67,7 +67,7 @@ class ChatHistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Chat History"),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF284379),
         elevation: 0,
       ),
       body: Padding(
@@ -77,7 +77,7 @@ class ChatHistoryPage extends StatelessWidget {
           itemBuilder: (context, index) {
             var chat = chatHistory[index];
             return Card(
-              color: Color(0xFFB3E5FC),
+              color: Colors.blue.shade50,
               elevation: 3,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),

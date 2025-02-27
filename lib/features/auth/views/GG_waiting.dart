@@ -3,7 +3,9 @@ import 'dart:async';
 
 import 'package:gat_helper_app/features/auth/views/QQ_Rank.dart';
 
+import 'Group_GameQ.dart';
 import 'Ques_group.dart';
+import 'find_game_page.dart';
 
 class LeaderWidget extends StatefulWidget {
   @override
@@ -99,7 +101,14 @@ class _LeaderWidgetState extends State<LeaderWidget> {
             left: 20,
             child: IconButton(
               icon: Icon(Icons.exit_to_app, color: Colors.redAccent, size: 30),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GroupGamePage2(),
+                  ),
+                );
+              },
             ),
           ),
 

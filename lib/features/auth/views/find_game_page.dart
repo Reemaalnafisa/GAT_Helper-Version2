@@ -4,12 +4,12 @@ import 'package:gat_helper_app/features/auth/views/custom_group_game_page.dart';
 import 'GG_waiting.dart';
 import 'Ques_group.dart';
 
-class GroupGamePage extends StatefulWidget {
+class GroupGamePage2 extends StatefulWidget {
   @override
   _GroupGamePageState createState() => _GroupGamePageState();
 }
 
-class _GroupGamePageState extends State<GroupGamePage> {
+class _GroupGamePageState extends State<GroupGamePage2> {
   TextEditingController _codeController = TextEditingController();
 
   final List<Map<String, dynamic>> groupGames = [

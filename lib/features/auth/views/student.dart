@@ -185,7 +185,7 @@ class StudentHome extends State<StudentHomePage> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => GroupGamePage()),
+                                MaterialPageRoute(builder: (context) => GroupGamePage2()),
                               );
                             },
                             child: ClipRRect(

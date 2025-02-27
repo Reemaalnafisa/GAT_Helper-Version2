@@ -12,9 +12,13 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
   int? selectedQuestionNumber = 10;
   int? selectedTimer = 15;
   TextEditingController _participantsController = TextEditingController();
+  bool isVerbalSelected = false;
+  bool isQuantitativeSelected = false;
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -60,21 +64,8 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    _buildOptionCard(
-                      "Type of questions?",
-                      [
-                        _buildRadioOption("Verbal", selectedQuestionType, (value) {
-                          setState(() {
-                            selectedQuestionType = value;
-                          });
-                        }),
-                        _buildRadioOption("Quantitative", selectedQuestionType, (value) {
-                          setState(() {
-                            selectedQuestionType = value;
-                          });
-                        }),
-                      ],
-                    ),
+                    // ✅ Question Type Card (Checkboxes inside a card)
+                    _buildQuestionTypeCard(),
 
                     _buildOptionCard(
                       "Number of questions?",
@@ -156,6 +147,56 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
       ),
     );
   }
+
+  // ✅ Widget for Question Type Card (CheckBoxes Side by Side)
+  Widget _buildQuestionTypeCard() {
+    return Card(
+      color: Colors.blue.shade50,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Select Question Type?", style: TextStyle(fontSize: 14, color: Colors.black)),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  children: [
+                    Checkbox(
+                      value: isVerbalSelected,
+                      onChanged: (value) {
+                        setState(() {
+                          isVerbalSelected = value!;
+                        });
+                      },
+                    ),
+                    Text("Verbal"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: isQuantitativeSelected,
+                      onChanged: (value) {
+                        setState(() {
+                          isQuantitativeSelected = value!;
+                        });
+                      },
+                    ),
+                    Text("Quantitative"),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 
   // ✅ Widget for Radio Button Options (FIXED)
   Widget _buildRadioOption(dynamic value, dynamic groupValue, Function(dynamic) onChanged) {
