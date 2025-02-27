@@ -1,117 +1,99 @@
 import 'package:flutter/material.dart';
 
-class RequestDetailsPage extends StatefulWidget {
+class RequestDetailsPage5 extends StatefulWidget {
+  final String studentName;
+  final String preferredMethod;
+
+  // ✅ Constructor with required parameters
+  const RequestDetailsPage5({
+    Key? key,
+    required this.studentName,
+    required this.preferredMethod,
+  }) : super(key: key);
+
   @override
   _RequestDetailsPageState createState() => _RequestDetailsPageState();
 }
 
-class _RequestDetailsPageState extends State<RequestDetailsPage> {
+class _RequestDetailsPageState extends State<RequestDetailsPage5> {
   int? selectedAnswer1;
   int? selectedAnswer2;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          // Rounded Top Bar
-          Stack(
-            children: [
-              ClipPath(
-                clipper: CustomAppBarClipper(),
-                child: Container(
-                  height: 150,
-                  width: double.infinity,
-                  color: Colors.blue,
-                ),
-              ),
-              Positioned(
-                top: 70,
-                left: 20,
-                child: Row(
+      appBar: AppBar(
+        title: Text("Request Details"),
+        backgroundColor: Colors.blue,
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ✅ Use `widget.studentName` and `widget.preferredMethod`
+            Text(
+              "Student: ${widget.studentName}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Preferred Method: ${widget.preferredMethod}",
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 20),
+
+            // ✅ Scrollable Questions Section
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.pop(context),
+                    _questionCard(
+                      "The Pin number of a phone is formed from four numbers (0 to 9). How many ways can it be formed?",
+                      ["10000", "6500", "5040", "4000"],
+                      selectedAnswer1,
+                          (value) => setState(() => selectedAnswer1 = value),
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      "Request Details",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    SizedBox(height: 15), // Adjusted spacing
+
+                    _questionCard(
+                      "FALLING : GRAVITATION",
+                      [
+                        "collapse : destruction",
+                        "balloon : sky",
+                        "pressure : air",
+                        "electricity : lamp"
+                      ],
+                      selectedAnswer2,
+                          (value) => setState(() => selectedAnswer2 = value),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-
-          // Scrollable Content
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                children: [
-                  _questionCard(
-                    "The Pin number of a phone is formed from four numbers (0 to 9). How many ways can it be formed?",
-                    ["10000", "6500", "5040", "4000"],
-                    selectedAnswer1,
-                        (value) => setState(() => selectedAnswer1 = value),
-                  ),
-                  SizedBox(height: 15), // Adjusted spacing
-
-                  _questionCard(
-                    "FALLING : GRAVITATION",
-                    [
-                      "collapse : destruction",
-                      "balloon : sky",
-                      "pressure : air",
-                      "electricity : lamp"
-                    ],
-                    selectedAnswer2,
-                        (value) => setState(() => selectedAnswer2 = value),
-                  ),
-                  SizedBox(height: 30), // Extra spacing before buttons
-                ],
               ),
             ),
-          ),
 
-          // Accept & Reject Buttons Fixed at Bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-            child: Column(
+            // ✅ Accept & Reject Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _actionButton("Reject", Colors.red, () {}),
-                    _actionButton("Accept", Colors.green, () {}),
-                  ],
-                ),
-                SizedBox(height: 50), // White space under buttons
+                _actionButton("Reject", Colors.red, () {}),
+                _actionButton("Accept", Colors.green, () {}),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  // Smaller Question Card
+  // ✅ Helper: Question Card Widget
   Widget _questionCard(String question, List<String> options, int? selectedValue, Function(int?) onChanged) {
     return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // Reduced height
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12), // Smaller rounded edges
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 4),
-        ],
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,10 +119,10 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
                 value: index,
                 groupValue: selectedValue,
                 onChanged: onChanged,
-                title: Text(options[index], style: TextStyle(fontSize: 13)), // Adjusted text size
+                title: Text(options[index], style: TextStyle(fontSize: 13)),
                 activeColor: Colors.blue,
-                contentPadding: EdgeInsets.zero, // Removed extra padding
-                dense: true, // Makes it more compact
+                contentPadding: EdgeInsets.zero,
+                dense: true,
               ),
             ),
           ),
@@ -149,35 +131,16 @@ class _RequestDetailsPageState extends State<RequestDetailsPage> {
     );
   }
 
-  // Button Widget
+  // ✅ Helper: Button Widget
   Widget _actionButton(String text, Color color, VoidCallback onPressed) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       onPressed: onPressed,
       child: Text(text, style: TextStyle(color: Colors.white, fontSize: 16)),
     );
   }
-}
-
-// Custom Clipper for Rounded AppBar
-class CustomAppBarClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 40);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 40);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

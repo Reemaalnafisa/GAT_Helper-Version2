@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/Student_chat_page.dart';
 import 'package:gat_helper_app/features/auth/views/request_link_page.dart';
+import 'package:gat_helper_app/features/auth/views/tutor_request_details_page.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
 import 'package:gat_helper_app/features/auth/views/tutor_chat_history_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
@@ -356,10 +357,10 @@ class _TutorHomepageState extends State<TutorHomepage> {
                                       ],
                                     ),
 
-                                    // ✅ Date/Time moved to Right Alone (Not in Grade Row)
+                                    // ✅ Fix: Date/Time moved to Right (Properly)
                                     Positioned(
                                       top: 0, // Ensures it's at the top
-                                      left: 100, // Aligns it to the right
+                                      right: 0, // ✅ Now it stays on the right dynamically
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min, // Keeps it compact
                                         children: [
@@ -377,8 +378,8 @@ class _TutorHomepageState extends State<TutorHomepage> {
                                     ),
                                   ],
                                 ),
-
                               ),
+
 
                               const Icon(
                                 Icons.arrow_forward_ios,
@@ -618,34 +619,39 @@ class AllRequestsPage extends StatelessWidget {
           final request = requests[index];
           return GestureDetector(
             onTap: () {
+              String studentName = request.name;
+              String preferredMethod = request.method;
               // Navigate to RequestDetailsPage
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RequestDetailsPage(
-                    request: request,
-                    onReject: () {
-                      // Handle rejection (optional logic here)
-                      Navigator.pop(context);
-                    },
-                    onAccept: () {
-                      // Handle acceptance and navigate accordingly
-                      if (request.method == 'Chat') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ChatPage(),
-                          ),
-                        );
-                      } else if (request.method == 'Virtual') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => SessionLinkPage(),
-                          ),
-                        );
-                      }
-                    },
+                  builder: (context) => RequestDetailsPage5(
+                    studentName: studentName,  // ✅ Passing student's name
+                    preferredMethod: preferredMethod,  // ✅ Passing preferred method
+                    //this is n
+                    //request: request,
+                    //onReject: () {
+                    // Handle rejection (optional logic here)
+                    // Navigator.pop(context);
+                    // },
+                    // onAccept: () {
+                    // Handle acceptance and navigate accordingly
+                    // if (request.method == 'Chat') {
+                    //   Navigator.push(
+                    //  context,
+                    //  MaterialPageRoute(
+                    //   builder: (_) => ChatPage(),
+                    //  ),
+                    // );
+                    // } else if (request.method == 'Virtual') {
+                    //  Navigator.push(
+                    //   context,
+                    //  MaterialPageRoute(
+                    //     builder: (_) => SessionLinkPage(),
+                    //  ),
+                    // );
+                    // }
+                    // },
                   ),
                 ),
               );
@@ -732,8 +738,8 @@ class AllRequestsPage extends StatelessWidget {
                 ),
                 // Timer in the upper right corner
                 Positioned(
-                  top: 20,
-                  right: 24,
+                  top: 25,
+                  right: 45,
                   child: Row(
                     children: [
                       Icon(
@@ -772,13 +778,13 @@ class StudentRequest {
   final List<String> options;
 
   StudentRequest({
-  required this.name,
-  required this.grade,
-  required this.time,
-  required this.method,
-  required this.questionCount,
-  required this.color,
-  required this.question,
-  required this.options,
+    required this.name,
+    required this.grade,
+    required this.time,
+    required this.method,
+    required this.questionCount,
+    required this.color,
+    required this.question,
+    required this.options,
   });
 }

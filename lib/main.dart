@@ -5,6 +5,7 @@ import 'package:gat_helper_app/features/common/edit_profile_page.dart';
 import 'features/auth/views/request_link_page.dart';
 import 'features/auth/views/tutor_chat_history_page.dart';
 import 'features/auth/views/tutor_home_page.dart';
+import 'features/auth/views/tutor_request_details_page.dart';
 
 void main() {
   runApp(const MyApp());

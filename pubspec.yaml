@@ -16,6 +16,7 @@ dependencies:
   sqflite: ^2.3.0  # ✅ SQLite database for Flutter
   path_provider: ^2.0.15
   confetti: 0.8.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
