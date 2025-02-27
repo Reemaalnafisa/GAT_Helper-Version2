@@ -295,89 +295,95 @@ class _TutorHomepageState extends State<TutorHomepage> {
                               ),
                             ],
                           ),
-                          child: Stack(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              // Main Content of the Card
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    request.name,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Text(
-                                    request.grade,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey.shade700,
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Row(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(Icons.question_answer, size: 16, color: Colors.black87),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            "${request.questionCount} Questions",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(width: 16),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.chat, size: 16, color: Colors.black87),
-                                          SizedBox(width: 4),
-                                          Text(
-                                            request.method,
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-
-                                        ],
-
-                                      ),
-
-                                    ],
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 20,
-                                    color: Colors.grey,
-                                  ),
-                                ],
+                              CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.white,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 30,
+                                  color: Colors.grey.shade600,
+                                ),
                               ),
-                              // Time Positioned in the Upper Right
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Row(
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Stack(
                                   children: [
-                                    Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
-                                    SizedBox(width: 4),
-                                    Text(
-                                      request.time,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey.shade600,
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        // Name (Always on Left)
+                                        Text(
+                                          request.name,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        // Grade (Below Name, Still Left-Aligned)
+                                        Text(
+                                          request.grade,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        // Question Count & Chat Method Row
+                                        Row(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.question_answer, size: 16),
+                                                const SizedBox(width: 4),
+                                                Text("${request.questionCount}"),
+                                              ],
+                                            ),
+                                            const SizedBox(width: 16),
+                                            Row(
+                                              children: [
+                                                const Icon(Icons.chat, size: 16),
+                                                const SizedBox(width: 4),
+                                                Text(request.method),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+
+                                    // ✅ Date/Time moved to Right Alone (Not in Grade Row)
+                                    Positioned(
+                                      top: 0, // Ensures it's at the top
+                                      left: 100, // Aligns it to the right
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min, // Keeps it compact
+                                        children: [
+                                          Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            request.time,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey.shade600,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
+
+                              ),
+
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 20,
+                                color: Colors.grey,
                               ),
                             ],
                           ),
@@ -385,6 +391,7 @@ class _TutorHomepageState extends State<TutorHomepage> {
                       );
                     },
                   ),
+
                 ),
               ],
             ),
@@ -725,7 +732,7 @@ class AllRequestsPage extends StatelessWidget {
                 ),
                 // Timer in the upper right corner
                 Positioned(
-                  top: 12,
+                  top: 20,
                   right: 24,
                   child: Row(
                     children: [
