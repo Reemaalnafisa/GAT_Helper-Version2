@@ -43,15 +43,23 @@ class _DashboardState extends State<Dashboard> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+
                       DashboardHeader(),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          SizedBox(width: 20),
+                          LastGameWidget(),
+                          SizedBox(width: 15),
+                          QuizPassedWidget(),
+                        ],
+                      ),
                       BarGraphCard(),
                       LineChartCard(
                         selectedMonth: selectedMonth,
                         onNextMonth: nextMonth,
                         onPreviousMonth: previousMonth,
                       ),
-                      LastGameWidget(),
-
                     ],
                   ),
                 ),
@@ -77,7 +85,6 @@ class _DashboardState extends State<Dashboard> {
 
 
 
-/// ✅ **Widget: Line Chart with Month Navigation**
 class LineChartCard extends StatelessWidget {
   final String selectedMonth;
   final VoidCallback onNextMonth;
@@ -152,55 +159,59 @@ class LineChartCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 20),
+          // تحديد حجم العرض ليشغل نصف الشاشة
           AspectRatio(
-            aspectRatio: 16 / 5,
-            child: LineChart(
-              LineChartData(
-                lineTouchData: LineTouchData(handleBuiltInTouches: true),
-                gridData: FlGridData(show: false),
-                titlesData: FlTitlesData(
-                  rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (double value, TitleMeta meta) {
-                        if (data.bottomTitle.containsKey(value.toInt())) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Text(
-                              data.bottomTitle[value.toInt()]!,
-                              style: TextStyle(fontSize: 12, color: Colors.white70),
-                            ),
-                          );
-                        }
-                        return SizedBox.shrink();
-                      },
+            aspectRatio: 8 / 2.5,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 1, // نصف الشاشة
+              child: LineChart(
+                LineChartData(
+                  lineTouchData: LineTouchData(handleBuiltInTouches: true),
+                  gridData: FlGridData(show: false),
+                  titlesData: FlTitlesData(
+                    rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (double value, TitleMeta meta) {
+                          if (data.bottomTitle.containsKey(value.toInt())) {
+                            return Padding(
+                              padding: EdgeInsets.only(top: 2.5),
+                              child: Text(
+                                data.bottomTitle[value.toInt()]!,
+                                style: TextStyle(fontSize: 12, color: Colors.white70),
+                              ),
+                            );
+                          }
+                          return SizedBox.shrink();
+                        },
+                      ),
                     ),
+                    leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
                   ),
-                  leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  borderData: FlBorderData(show: false),
+                  lineBarsData: [
+                    LineChartBarData(
+                      color: Colors.white,
+                      barWidth: 2,
+                      belowBarData: BarAreaData(show: false),
+                      dotData: FlDotData(show: false),
+                      spots: data.spots1[selectedMonth] ?? [],
+                    ),
+                    LineChartBarData(
+                      color: Colors.orange,
+                      barWidth: 2,
+                      belowBarData: BarAreaData(show: false),
+                      dotData: FlDotData(show: false),
+                      spots: data.spots2[selectedMonth] ?? [],
+                    ),
+                  ],
+                  minX: 1,
+                  maxX: 50,
+                  minY: 0,
+                  maxY: 50,
                 ),
-                borderData: FlBorderData(show: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    color: Colors.white,
-                    barWidth: 3,
-                    belowBarData: BarAreaData(show: false),
-                    dotData: FlDotData(show: false),
-                    spots: data.spots1[selectedMonth] ?? [],
-                  ),
-                  LineChartBarData(
-                    color: Colors.orange,
-                    barWidth: 3,
-                    belowBarData: BarAreaData(show: false),
-                    dotData: FlDotData(show: false),
-                    spots: data.spots2[selectedMonth] ?? [],
-                  ),
-                ],
-                minX: 1,
-                maxX: 100,
-                minY: 0,
-                maxY: 100,
               ),
             ),
           ),
@@ -209,6 +220,7 @@ class LineChartCard extends StatelessWidget {
     );
   }
 }
+
 class DashboardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -217,14 +229,14 @@ class DashboardHeader extends StatelessWidget {
         Image.asset(
           'assets/rectangle1.png',
           width: double.infinity,
-          height: 140, // ✅ تقليل الارتفاع
+          height: 150, // ✅ تقليل الارتفاع
           fit: BoxFit.cover,
         ),
         Positioned(
-          top: 25, // ✅ تحريك الأيقونة للأعلى قليلاً
-          left: 20,
+          top: 33, // ✅ تحريك الأيقونة للأعلى قليلاً
+          right: 20,
           child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white, size: 25), // ✅ تصغير الأيقونة
+            icon: Icon(Icons.arrow_forward, color: Colors.white, size: 30),
             onPressed: () {
               Navigator.push(
                 context,
@@ -234,8 +246,8 @@ class DashboardHeader extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 75, // ✅ تحريك النص للأعلى قليلاً
-          left: 25,
+          top: 88, // ✅ تحريك النص للأعلى قليلاً
+          left: 28,
           child: Text(
             'DashBoard',
             style: TextStyle(
@@ -256,73 +268,96 @@ class DashboardHeader extends StatelessWidget {
 class QuizPassedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "Quiz Passed",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
-            color: Colors.black87,
+    return Container(
+      width: 180, // عرض مماثل للـ Last Game
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30), // الزوايا المستديرة مثل Last Game
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5,
+            offset: Offset(0, 3),
           ),
-        ),
-        SizedBox(height: 8),
-        Container(
-          width: 80,
-          height: 80,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                width: 75,
-                height: 75,
-                child: CircularProgressIndicator(
-                  value: 1,
-                  strokeWidth: 12,
-                  backgroundColor: Colors.white30,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[300]!),
-                ),
-              ),
-              SizedBox(
-                width: 70,
-                height: 70,
-                child: CircularProgressIndicator(
-                  value: 0.75,
-                  strokeWidth: 14,
-                  backgroundColor: Colors.transparent,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "23 Wins",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    "(75%)",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+        ],
+      ),
+      padding: EdgeInsets.all(14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+
+          Text(
+            "Quiz Passed",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
           ),
-        ),
-      ],
+          SizedBox(height: 12), // زيادة المسافة بين العنوان وبقية المحتوى
+
+
+          Container(
+            width: 80,
+            height: 80,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // الدائرة الخلفية
+                SizedBox(
+                  width: 75,
+                  height: 75,
+                  child: CircularProgressIndicator(
+                    value: 1,
+                    strokeWidth: 12,
+                    backgroundColor: Colors.white30,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[300]!),
+                  ),
+                ),
+                // الدائرة الأمامية (تُظهر التقدم)
+                SizedBox(
+                  width: 70,
+                  height: 70,
+                  child: CircularProgressIndicator(
+                    value: 0.75, // تغيير النسبة بناءً على البيانات
+                    strokeWidth: 14,
+                    backgroundColor: Colors.transparent,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                  ),
+                ),
+                // النص داخل الدائرة
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "23 Wins",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "(75%)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
+
 
 /// ✅ **Widget: Performance Graph**
 class PerformanceGraphWidget extends StatelessWidget {
@@ -377,19 +412,18 @@ class PerformanceGraphWidget extends StatelessWidget {
 
 
 /// ✅ **Widget: Last Game Section**
-
 class LastGameWidget extends StatefulWidget {
   @override
   _LastGameWidgetState createState() => _LastGameWidgetState();
 }
 
 class _LastGameWidgetState extends State<LastGameWidget> {
-  bool isGroupSelected = false; // ✅ متغير للتحكم في إظهار البيانات الإضافية
+  bool isGroupSelected = false; // متغير للتحكم في إظهار البيانات الإضافية
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: 180,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
@@ -405,7 +439,7 @@ class _LastGameWidgetState extends State<LastGameWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// ✅ **العنوان**
+          // العنوان
           Text(
             "Last Game",
             style: TextStyle(
@@ -416,13 +450,13 @@ class _LastGameWidgetState extends State<LastGameWidget> {
           ),
           SizedBox(height: 10),
 
-          /// ✅ **زرّ الاختيار بين Self و Group**
+          // زر الاختيار بين Self و Group
           Row(
             children: [
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    isGroupSelected = false; // ✅ عند اختيار Self، يتم إخفاء Rank
+                    isGroupSelected = false; // عند اختيار Self، يتم إخفاء Rank
                   });
                 },
                 child: Container(
@@ -446,7 +480,7 @@ class _LastGameWidgetState extends State<LastGameWidget> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    isGroupSelected = true; // ✅ عند اختيار Group، يتم عرض Rank
+                    isGroupSelected = true; // عند اختيار Group، يتم عرض البيانات فقط
                   });
                 },
                 child: Container(
@@ -470,9 +504,8 @@ class _LastGameWidgetState extends State<LastGameWidget> {
           ),
           SizedBox(height: 10),
 
-          /// ✅ **عرض البيانات الأساسية**
+          // عرض البيانات الأساسية
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -481,6 +514,7 @@ class _LastGameWidgetState extends State<LastGameWidget> {
                   Text("Date", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 ],
               ),
+              SizedBox(width: 5),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -490,24 +524,12 @@ class _LastGameWidgetState extends State<LastGameWidget> {
               ),
             ],
           ),
-
-          /// ✅ **إضافة الـ Rank عند اختيار Group**
-          if (isGroupSelected) ...[
-            SizedBox(height: 10),
-            Divider(color: Colors.grey[300]),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Group Rank:", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                Text("#2", style: TextStyle(fontSize: 14, color: Colors.blue)),
-              ],
-            ),
-          ],
         ],
       ),
     );
   }
 }
+
 class DashboardBottom extends StatelessWidget {
   final double screenWidth;
   final double screenHeight;
@@ -519,27 +541,31 @@ class DashboardBottom extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          bottom: screenHeight * 0,
-          left: -screenWidth * 0.1,
-          right: -screenWidth * 0.1,
+          bottom: -screenHeight * 0.12,  // رفع الصورة قليلاً عن أسفل الشاشة
+          left: -screenWidth * 0.02,  // ضبط المسافة من اليسار
+          right: -screenWidth * 0.03,  // تعيين اليمين لتكون الصورة عند اليمين تمامًا
           child: Image.asset(
-            'assets/downgreen_background.png',
-            fit: BoxFit.cover,
-            width: screenWidth * 1.0,
-            height: screenHeight * 0.1, // ✅ تقليل الارتفاع
+            'assets/YellowNew.png',
+            fit: BoxFit.cover,  // ملاءمة الصورة بشكل مناسب
+            width: screenWidth * 1.1,  // جعل العرض يتناسب مع حجم الشاشة
+            height: screenHeight * 0.2,  // تعديل الارتفاع ليتناسب مع المساحة
           ),
         ),
+
+
         Positioned(
-          bottom: screenHeight * 0,
-          left: -screenWidth * 0.125,
-          right: -screenWidth * 0.125,
+          bottom: -screenHeight * 0.13,  // رفع الصورة قليلاً عن أسفل الشاشة
+          left: -screenWidth * 0.05,  // ضبط المسافة من اليسار
+          right: -screenWidth * 0.05,  // ضبط المسافة من اليمين
           child: Image.asset(
-            'assets/downblue_background.png',
-            fit: BoxFit.cover,
-            width: screenWidth * 1,
-            height: screenHeight * 0.1, // ✅ تقليل الارتفاع
+            'assets/BlueNew.png',
+            fit: BoxFit.cover,  // ملاءمة الصورة بشكل مناسب
+            width: screenWidth * 1.1,  // جعل العرض يتناسب مع حجم الشاشة
+            height: screenHeight * 0.2,  // تعديل الارتفاع ليتناسب مع المساحة
           ),
         ),
+
+
         // Math Image
 
       ],

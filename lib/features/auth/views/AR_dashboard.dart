@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gat_helper_app/const/data/AR_bar_graph_data.dart';
 import 'package:gat_helper_app/const/data/AR_line_chart_data.dart';
 import 'package:gat_helper_app/features/auth/views/Parent_home_pageAR.dart';
-import 'package:gat_helper_app/features/auth/views/student.dart';
 import 'package:gat_helper_app/model/BarGraphModel.dart';
 
 class ARDashboard extends StatefulWidget {
@@ -37,36 +36,48 @@ class _DashboardState extends State<ARDashboard> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  DashboardHeader(),
-                  SizedBox(height: 0),
-                  BarGraphCard(),
-                  SizedBox(height: 1),
-                  LineChartCard(
-                    selectedMonth: selectedMonth,
-                    onNextMonth: nextMonth,
-                    onPreviousMonth: previousMonth,
+          Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+
+                      DashboardHeader(),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          SizedBox(width: 20),
+                          LastGameWidget(),
+                          SizedBox(width: 15),
+                          QuizPassedWidget(),
+                        ],
+                      ),
+                      BarGraphCard(),
+                      LineChartCard(
+                        selectedMonth: selectedMonth,
+                        onNextMonth: nextMonth,
+                        onPreviousMonth: previousMonth,
+                      ),
+                    ],
                   ),
-                  LastGameWidget(),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-          /// الخلفية السفلية
-          Image.asset(
-            'assets/BB.png',
-            width: double.infinity,
-            height: 40,
-            fit: BoxFit.cover,
-          ),
+
+          /// ✅ أضف `DashboardBottom` هنا
+          DashboardBottom( screenWidth: MediaQuery.of(context).size.width,
+            screenHeight: MediaQuery.of(context).size.height,)
         ],
       ),
     );
+
+
+
+
   }
 }
 
@@ -258,7 +269,7 @@ class _LastGameWidgetState extends State<LastGameWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
+      width: 180,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
@@ -272,11 +283,11 @@ class _LastGameWidgetState extends State<LastGameWidget> {
       ),
       padding: EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          /// ✅ **العنوان**
+          // العنوان
           Text(
-            "اللعبة الأخيرة",  // تغيير النص إلى العربي
+            "اللعبة الأخيرة",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -285,14 +296,13 @@ class _LastGameWidgetState extends State<LastGameWidget> {
           ),
           SizedBox(height: 10),
 
-          /// ✅ **زر الاختيار بين "نفسي" و "مجموعة"**
+          // زر الاختيار بين Self و Group
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,  // محاذاة العناصر من اليمين لليسار
             children: [
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    isGroupSelected = false; // عند اختيار "نفسي"، يتم إخفاء الـ "رتبة"
+                    isGroupSelected = false; // عند اختيار Self، يتم إخفاء Rank
                   });
                 },
                 child: Container(
@@ -303,7 +313,7 @@ class _LastGameWidgetState extends State<LastGameWidget> {
                     border: Border.all(color: Colors.teal, width: 1),
                   ),
                   child: Text(
-                    "فردي",  // التسمية بالعربية
+                    "فردي",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -316,7 +326,7 @@ class _LastGameWidgetState extends State<LastGameWidget> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    isGroupSelected = true; // عند اختيار "مجموعة"، يتم عرض الـ "رتبة"
+                    isGroupSelected = true; // عند اختيار Group، يتم عرض البيانات فقط
                   });
                 },
                 child: Container(
@@ -327,7 +337,7 @@ class _LastGameWidgetState extends State<LastGameWidget> {
                     border: Border.all(color: Colors.orange, width: 1),
                   ),
                   child: Text(
-                    "مجموعة",  // التسمية بالعربية
+                    "مجموعةٍ",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -340,39 +350,26 @@ class _LastGameWidgetState extends State<LastGameWidget> {
           ),
           SizedBox(height: 10),
 
-          /// ✅ **عرض البيانات الأساسية**
+          // عرض البيانات الأساسية
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("20/20", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                  Text("21/11/2024", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  Text("20/20", style: TextStyle(fontSize: 14)),
+                  Text("21/11/2024", style: TextStyle(fontSize: 14)),
                 ],
               ),
+              SizedBox(width: 15),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text("النتيجة", style: TextStyle(fontSize: 14)),
-                  Text("التاريخ", style: TextStyle(fontSize: 14)),
+                  Text("النقاط", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  Text("التاريخ", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 ],
               ),
             ],
           ),
-
-          /// ✅ **إضافة الرتبة عند اختيار "مجموعة"**
-          if (isGroupSelected) ...[
-            SizedBox(height: 10),
-            Divider(color: Colors.grey[300]),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("#2", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                Text("الترتيب", style: TextStyle(fontSize: 14, color: Colors.blue)),
-              ],
-            ),
-          ],
         ],
       ),
     );
@@ -504,5 +501,139 @@ class BarGraphCard extends StatelessWidget {
     } else {
       return Colors.green.withOpacity(0.8);  // لون أخضر للقيم المرتفعة
     }
+  }
+}
+class DashboardBottom extends StatelessWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const DashboardBottom({required this.screenWidth, required this.screenHeight});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned(
+          bottom: -screenHeight * 0.12,  // رفع الصورة قليلاً عن أسفل الشاشة
+          left: -screenWidth * 0.02,  // ضبط المسافة من اليسار
+          right: -screenWidth * 0.03,  // تعيين اليمين لتكون الصورة عند اليمين تمامًا
+          child: Image.asset(
+            'assets/YellowNew.png',
+            fit: BoxFit.cover,  // ملاءمة الصورة بشكل مناسب
+            width: screenWidth * 1.1,  // جعل العرض يتناسب مع حجم الشاشة
+            height: screenHeight * 0.2,  // تعديل الارتفاع ليتناسب مع المساحة
+          ),
+        ),
+
+
+        Positioned(
+          bottom: -screenHeight * 0.13,  // رفع الصورة قليلاً عن أسفل الشاشة
+          left: -screenWidth * 0.05,  // ضبط المسافة من اليسار
+          right: -screenWidth * 0.05,  // ضبط المسافة من اليمين
+          child: Image.asset(
+            'assets/BlueNew.png',
+            fit: BoxFit.cover,  // ملاءمة الصورة بشكل مناسب
+            width: screenWidth * 1.1,  // جعل العرض يتناسب مع حجم الشاشة
+            height: screenHeight * 0.2,  // تعديل الارتفاع ليتناسب مع المساحة
+          ),
+        ),
+
+
+        // Math Image
+
+      ],
+    );
+  }
+}
+// ✅ **Widget: Quiz Passed Progress Indicator**
+class QuizPassedWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 180, // عرض مماثل للـ Last Game
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30), // الزوايا المستديرة مثل Last Game
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+
+          Text(
+            "اختبار ناجح",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          SizedBox(height: 12), // زيادة المسافة بين العنوان وبقية المحتوى
+
+
+          Container(
+            width: 80,
+            height: 80,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // الدائرة الخلفية
+                SizedBox(
+                  width: 75,
+                  height: 75,
+                  child: CircularProgressIndicator(
+                    value: 1,
+                    strokeWidth: 12,
+                    backgroundColor: Colors.white30,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[300]!),
+                  ),
+                ),
+                // الدائرة الأمامية (تُظهر التقدم)
+                SizedBox(
+                  width: 70,
+                  height: 70,
+                  child: CircularProgressIndicator(
+                    value: 0.75, // تغيير النسبة بناءً على البيانات
+                    strokeWidth: 14,
+                    backgroundColor: Colors.transparent,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
+                  ),
+                ),
+                // النص داخل الدائرة
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "فوز23 ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "(75%)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

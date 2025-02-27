@@ -1,20 +1,22 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/QQ_Rank.dart';
+import 'package:gat_helper_app/features/auth/views/student.dart';
+import 'result_page.dart'; // Import the ResultsWidget (create it if not already)
 
-class GroupGamePage extends StatefulWidget {
+
+class GroupGamePageWidget extends StatefulWidget {
   @override
-  _GroupGamePageState createState() => _GroupGamePageState();
+  _GroupGamePageWidgetState createState() => _GroupGamePageWidgetState();
 }
 
-class _GroupGamePageState extends State<GroupGamePage> {
+class _GroupGamePageWidgetState extends State<GroupGamePageWidget> {
   int currentQuestionIndex = 1;
   String? selectedAnswer;
-  int remainingTime = 60;
-  Timer? timer;
 
   final List<Map<String, dynamic>> questions = [
     {
-      'question': 'The Pin number of a phone is formed from four numbers from (0 to 9). How many ways can it be formed?',
+      'question': 'The Pin number of a phone is formed from four numbers from 0 to 9. How many ways can it be formed?',
       'options': ['10000', '6500', '5040', '4000'],
       'correctAnswer': '10000',
     },
@@ -25,30 +27,182 @@ class _GroupGamePageState extends State<GroupGamePage> {
     },
   ];
 
+  List<String?> userAnswers = [];
+  late int minutes;
+  late int seconds;
+  late final Timer _timer;
+
   @override
   void initState() {
     super.initState();
-    startTimer();
-  }
+    userAnswers = List<String?>.filled(questions.length, null);
+    minutes = 0; // Set initial minutes for the timer
+    seconds = 10;
 
-  void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (remainingTime > 0) {
-        setState(() {
-          remainingTime--;
-        });
-      } else {
-        timer.cancel();
-        // Handle time-up scenario
-      }
+    // Start the timer
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (seconds > 0) {
+          seconds--;
+        } else if (minutes > 0) {
+          minutes--;
+          seconds = 59;
+        } else {
+          // Timer is done, show dialog and navigate to RankPage
+          _showTimeUpDialog();
+          _timer.cancel();
+        }
+      });
     });
   }
-
   @override
   void dispose() {
-    timer?.cancel();
+    _timer.cancel(); // إيقاف التايمر عند مغادرة الصفحة
     super.dispose();
   }
+
+
+  void _showTimeUpDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          content: Container(
+            height: 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Time\'s up!',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RankPage(), // Navigate to RankPage
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(232, 241, 174, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Go to Rank',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showExitConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          content: Container(
+            height: 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Confirm Quit?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StudentHomePage(), // Navigate to ConfigPage
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(232, 241, 174, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void navigateToResultsPage() {
+    // Calculate the number of correct, incorrect, and skipped answers
+    _timer.cancel();
+    int correctAnswers = 0;
+    int skippedAnswers = 0;
+
+    for (int i = 0; i < questions.length; i++) {
+      if (userAnswers[i] == null) {
+        skippedAnswers++;
+      } else if (userAnswers[i] == questions[i]['correctAnswer']) {
+        correctAnswers++;
+      }
+    }
+
+    int incorrectAnswers = questions.length - correctAnswers - skippedAnswers;
+
+    // Calculate completion percentage
+    double completionPercentage =
+        ((questions.length - skippedAnswers) / questions.length) * 100;
+
+    // Calculate score (for example, score = correct answers * 10)
+    String score = (correctAnswers * 10).toString();
+
+    // Navigate to the ResultsWidget with the calculated data
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultsWidget(
+          correctAnswers: correctAnswers,
+          incorrectAnswers: incorrectAnswers,
+          skippedAnswers: skippedAnswers,
+          completionPercentage: completionPercentage,
+          score: score,
+          questions: questions, // Pass the list of questions
+          userAnswers: userAnswers, // Pass the user's answers
+        ),
+      ),
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,185 +212,276 @@ class _GroupGamePageState extends State<GroupGamePage> {
     final currentQuestion = questions[currentQuestionIndex - 1];
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: screenHeight * 0.06),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Icon(Icons.arrow_back, color: Colors.red, size: 30),
-                ),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: CircularProgressIndicator(
-                        value: remainingTime / 60,
-                        strokeWidth: 5,
-                        backgroundColor: Colors.orangeAccent,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blueAccent),
-                      ),
-                    ),
-                    Text(
-                      '$remainingTime s',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+      body: Stack(
+        children: [
+          // Background
+          Positioned(
+            bottom: screenHeight * 0.02,
+            left: -screenWidth * 0.1,
+            right: -screenWidth * 0.1,
+            child: Image.asset(
+              'assets/yellow_background.png',
+              fit: BoxFit.cover,
+              width: screenWidth * 1.2,
+              height: screenHeight * 0.4,
             ),
-            SizedBox(height: 20),
-            Center(
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      '$currentQuestionIndex',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.blue.shade50,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Text(
-                      currentQuestion['question'],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ],
+          ),
+          Positioned(
+            bottom: 0,
+            left: -screenWidth * 0.1,
+            right: -screenWidth * 0.1,
+            child: Image.asset(
+              'assets/downblue_background.png',
+              fit: BoxFit.cover,
+              width: screenWidth * 1.2,
+              height: screenHeight * 0.35,
+            ),
+          ),
+          Positioned(
+            bottom: -screenHeight * 0.12,
+            left: -screenWidth * 0.1,
+            right: -screenWidth * 0.1,
+            child: Image.asset(
+              'assets/Math.png',
+              fit: BoxFit.cover,
+              width: screenWidth * 1.2,
+              height: screenHeight * 0.3,
+            ),
+          ),
+          // Exit Button
+          Positioned(
+            top: screenHeight * 0.05,
+            left: screenWidth * 0.05,
+            child: GestureDetector(
+              onTap: () {
+                _timer.cancel(); // إيقاف التايمر عند الضغط على زر الخروج
+                showExitConfirmationDialog(); // Show the confirmation dialog
+              },
+              child: Icon(
+                Icons.arrow_back, // Use the exit icon
+                size: screenWidth * 0.1, // Adjust the icon size
+                color: Colors.redAccent, // Set the icon color
               ),
             ),
-            SizedBox(height: 20),
-            Column(
-              children: List.generate(currentQuestion['options'].length, (index) {
-                final option = currentQuestion['options'][index];
-                final optionLetter = String.fromCharCode(97 + index);
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedAnswer = option;
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                    decoration: BoxDecoration(
-                      color: selectedAnswer == option ? Colors.blue : Colors.blue.shade300,
-                      borderRadius: BorderRadius.circular(20),
+          ),
+
+
+          // Timer Display
+          Positioned(
+            top: screenHeight * 0.1,
+            right: screenWidth * 0.05,
+            child: Text(
+              '$minutes:${seconds.toString().padLeft(2, '0')}',
+              style: TextStyle(
+                fontSize: screenWidth * 0.05,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+          ),
+          // Main Content
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: screenHeight * 0.01),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: screenHeight * 0.175), // Adjust this to move the box down
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.05,
+                          vertical: screenHeight * 0.05,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF0EFFF),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          currentQuestion['question'],
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.045,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                    Positioned(
+                      top: screenHeight * 0.1, // Adjust this value to move the number lower
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                        child: Container(
+                          width: screenWidth * 0.15,
+                          height: screenWidth * 0.15,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.blueAccent,
+                              width: 4,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '$currentQuestionIndex',
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenWidth * 0.05,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.03),
+                ...List.generate(currentQuestion['options'].length, (index) {
+                  final option = currentQuestion['options'][index];
+                  final optionLetter = String.fromCharCode(97 + index);
+
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        userAnswers[currentQuestionIndex - 1] = option;
+                        selectedAnswer = option;
+                      });
+                    },
+                    child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.amber,
-                              radius: 15,
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.05,
+                            vertical: screenHeight * 0.015,
+                          ),
+                          decoration: BoxDecoration(
+                            color: selectedAnswer == option
+                                ? Colors.blue[400]
+                                : Colors.blue[100],
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                option,
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.04,
+                                  color: selectedAnswer == option
+                                      ? Colors.white
+                                      : Colors.black87,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: -screenWidth * 0.03,
+                          left: screenWidth * 0.02,
+                          child: Container(
+                            width: screenWidth * 0.1,
+                            height: screenWidth * 0.1,
+                            decoration: BoxDecoration(
+                              color: Colors.yellow[600],
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
                               child: Text(
                                 optionLetter,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: screenWidth * 0.045,
+                                ),
                               ),
                             ),
-                            SizedBox(width: 10),
-                            Text(
-                              option,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Radio(
-                          value: option,
-                          groupValue: selectedAnswer,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedAnswer = value as String?;
-                            });
-                          },
-                          activeColor: Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }),
-            ),
-            Spacer(),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: currentQuestionIndex > 1
-                        ? () {
-                      setState(() {
-                        currentQuestionIndex--;
-                        selectedAnswer = null;
-                      });
-                    }
-                        : null,
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_back, color: currentQuestionIndex > 1 ? Colors.black : Colors.grey),
-                        Text(
-                          'Previous',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: currentQuestionIndex > 1 ? Colors.black : Colors.grey,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  TextButton(
-                    onPressed: currentQuestionIndex < questions.length
-                        ? () {
-                      setState(() {
-                        currentQuestionIndex++;
-                        selectedAnswer = null;
-                      });
-                    }
-                        : () {
-                      // Navigate to results page
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          currentQuestionIndex < questions.length ? 'Next' : 'Finish',
-                          style: TextStyle(fontSize: 16, color: Colors.black),
+                  );
+                }),
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(bottom: screenHeight * 0.23),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: currentQuestionIndex > 1
+                            ? () {
+                          setState(() {
+                            currentQuestionIndex--;
+                            selectedAnswer =
+                            userAnswers[currentQuestionIndex - 1];
+                          });
+                        }
+                            : null,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_back,
+                              color: currentQuestionIndex > 1 ? Colors.black : Colors.grey,
+                            ),
+                            SizedBox(width: screenWidth * 0.01),
+                            Text(
+                              'Previous',
+                              style: TextStyle(
+                                fontSize: screenWidth * 0.045,
+                                color: currentQuestionIndex > 1 ? Colors.black : Colors.grey,
+                              ),
+                            ),
+                          ],
                         ),
-                        Icon(Icons.arrow_forward, color: Colors.black),
-                      ],
-                    ),
+                      ),
+                      GestureDetector(
+                        onTap: currentQuestionIndex < questions.length
+                            ? () {
+                          setState(() {
+                            currentQuestionIndex++;
+                            selectedAnswer =
+                            userAnswers[currentQuestionIndex - 1];
+                          });
+                        }
+                            : () {
+                          navigateToResultsPage(); // Navigate to the results page
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              currentQuestionIndex < questions.length
+                                  ? 'Next'
+                                  : 'Finish',
+                              style: TextStyle(
+                                fontSize: screenWidth * 0.045,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.01),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

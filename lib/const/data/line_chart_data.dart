@@ -6,11 +6,11 @@ class LineData {
 
   /// ✅ بيانات لكل شهر
   final Map<String, List<FlSpot>> spots1 = {
-    "Jan": [FlSpot(1, 20), FlSpot(2, 25), FlSpot(80, 90)],
+    "Jan": [FlSpot(1, 20), FlSpot(2, 25), FlSpot(20, 40)],
     "Feb": [FlSpot(1, 15), FlSpot(2, 20), FlSpot(3, 35)],
     "Mar": [FlSpot(1, 10), FlSpot(2, 18), FlSpot(3, 25)],
     "Apr": [FlSpot(1, 5), FlSpot(2, 22), FlSpot(3, 40)],
-    "May": [FlSpot(1, 8), FlSpot(2, 28), FlSpot(3, 50)],
+    "May": [FlSpot(1, 8), FlSpot(2, 28), FlSpot(3, 34)],
     "Jun": [FlSpot(1, 12), FlSpot(2, 30), FlSpot(3, 45)],
   };
 
@@ -31,11 +31,7 @@ class LineData {
     30: '30',
     40: '40',
     50: '50',
-    60: '60',
-    70: '70',
-    80: '80',
-    90: '90',
-    100: '100',
+
   };
 }
 
