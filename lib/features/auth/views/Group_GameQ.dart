@@ -6,6 +6,7 @@ import 'result_page.dart'; // Import the ResultsWidget (create it if not already
 
 
 class GroupGamePageWidget extends StatefulWidget {
+
   @override
   _GroupGamePageWidgetState createState() => _GroupGamePageWidgetState();
 }
@@ -86,13 +87,9 @@ class _GroupGamePageWidgetState extends State<GroupGamePageWidget> {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context); // Close the dialog
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RankPage(), // Navigate to RankPage
-                      ),
-                    );
+                    navigateToResultsPage(); // استدعاء الميثود مباشرة
                   },
+
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color.fromRGBO(232, 241, 174, 1),
                     shape: RoundedRectangleBorder(
@@ -161,13 +158,14 @@ class _GroupGamePageWidgetState extends State<GroupGamePageWidget> {
       },
     );
   }
-
   void navigateToResultsPage() {
-    // Calculate the number of correct, incorrect, and skipped answers
+    // إيقاف التايمر عند الانتقال إلى الصفحة
     _timer.cancel();
+
     int correctAnswers = 0;
     int skippedAnswers = 0;
 
+    // حساب الإجابات الصحيحة والمفقودة
     for (int i = 0; i < questions.length; i++) {
       if (userAnswers[i] == null) {
         skippedAnswers++;
@@ -176,31 +174,35 @@ class _GroupGamePageWidgetState extends State<GroupGamePageWidget> {
       }
     }
 
+    // حساب الإجابات الخاطئة
     int incorrectAnswers = questions.length - correctAnswers - skippedAnswers;
 
-    // Calculate completion percentage
-    double completionPercentage =
-        ((questions.length - skippedAnswers) / questions.length) * 100;
+    // حساب نسبة الإنجاز
+    double completionPercentage = ((questions.length - skippedAnswers) / questions.length) * 100;
 
-    // Calculate score (for example, score = correct answers * 10)
+    // حساب الدرجة
     String score = (correctAnswers * 10).toString();
 
-    // Navigate to the ResultsWidget with the calculated data
+    // الانتقال إلى صفحة RankPage مع تمرير البيانات
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ResultsWidget(
+        builder: (context) => RankPage(
           correctAnswers: correctAnswers,
           incorrectAnswers: incorrectAnswers,
           skippedAnswers: skippedAnswers,
           completionPercentage: completionPercentage,
           score: score,
-          questions: questions, // Pass the list of questions
-          userAnswers: userAnswers, // Pass the user's answers
+          questions: questions, // تمرير الأسئلة
+          userAnswers: userAnswers, // تمرير الإجابات
         ),
       ),
     );
   }
+
+
+
+
 
 
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/Group_GameQ.dart';
 import 'dart:async';
 
 import 'package:gat_helper_app/features/auth/views/QQ_Rank.dart';
+import 'package:gat_helper_app/features/auth/views/student.dart';
 
 class LeaderWidget extends StatefulWidget {
   @override
@@ -9,7 +11,7 @@ class LeaderWidget extends StatefulWidget {
 }
 
 class _LeaderWidgetState extends State<LeaderWidget> {
-  int remainingTime = 10 * 60; // ✅ تحويل الوقت لـ 10 دقائق
+  int remainingTime = 10* 60; // ✅ تحويل الوقت لـ 10 دقائق
   Timer? timer;
 
   @override
@@ -31,11 +33,13 @@ class _LeaderWidgetState extends State<LeaderWidget> {
     });
   }
 
+
   @override
   void dispose() {
-    timer?.cancel();
+    timer?.cancel();  // إيقاف التايمر عند مغادرة الصفحة
     super.dispose();
   }
+
 
   // 🚨 نافذة انتهاء الوقت
   void showTimeOutPopup() {
@@ -97,7 +101,7 @@ class _LeaderWidgetState extends State<LeaderWidget> {
             left: 20,
             child: IconButton(
               icon: Icon(Icons.exit_to_app, color: Colors.redAccent, size: 30),
-              onPressed: () => Navigator.pop(context),
+              onPressed: showExitConfirmationDialog
             ),
           ),
 
@@ -209,9 +213,13 @@ class _LeaderWidgetState extends State<LeaderWidget> {
             left: screenWidth / 2 - 75,
             child: ElevatedButton(
               onPressed: () {
+                // إيقاف التايمر عند الضغط على الزر
+                timer?.cancel();
+
+                // الانتقال إلى صفحة GroupGamePageWidget بعد إيقاف التايمر
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RankPage()),
+                  MaterialPageRoute(builder: (context) => GroupGamePageWidget()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -221,7 +229,8 @@ class _LeaderWidgetState extends State<LeaderWidget> {
               ),
               child: Text('Start Game', style: TextStyle(fontSize: 18, color: Colors.black)),
             ),
-          ),
+          )
+
         ],
       ),
     );
@@ -242,4 +251,55 @@ class _LeaderWidgetState extends State<LeaderWidget> {
       ),
     );
   }
+  void showExitConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          content: Container(
+            height: 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Confirm Quit?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                    timer?.cancel(); // إيقاف التايمر عند الخروج من الصفحة
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StudentHomePage(), // Navigate to StudentHomePage
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(232, 241, 174, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }

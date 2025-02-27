@@ -15,7 +15,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   sqflite: ^2.3.0  # ✅ SQLite database for Flutter
   path_provider: ^2.0.15
-
+  confetti: 0.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -43,24 +43,12 @@ flutter:
     - assets/rank2.png
     - assets/rank3.png
     - assets/Pink.png
-
-
-
-
-
-
-    - assets/
-    - assets/logo.png
-    - assets/logo2.png
     - assets/upblue_background.png
-    - assets/downblue_background.png
     - assets/yellow_background.png
     - assets/Math.png
     - assets/exit_logo.png
     - assets/confetti.png
     - assets/robot_image.png
-    - assets/logo.png
-    - assets/logo2.png
     - assets/Mathremovebgpreview.png
     - assets/rectangle.svg
     - assets/rectangle4.svg
