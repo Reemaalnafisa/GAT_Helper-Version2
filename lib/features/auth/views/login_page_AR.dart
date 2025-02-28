@@ -8,7 +8,8 @@ import 'Sign_up_page_AR.dart';
 import '../../common/login_page.dart';
 
 class LoginPageAR extends StatefulWidget {
-  const LoginPageAR({super.key});
+  final String userRole; // User Role parameter
+  const LoginPageAR({super.key,required this.userRole});
 
   @override
   State<LoginPageAR> createState() => _LoginPageState();

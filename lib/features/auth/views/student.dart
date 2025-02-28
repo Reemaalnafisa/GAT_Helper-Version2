@@ -10,6 +10,8 @@ import '../../common/edit_profile_page.dart';
 
 import 'package:gat_helper_app/features/auth/views/DashBoard.dart';
 
+import '../../common/login_page.dart';
+
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({super.key});
 
@@ -109,7 +111,7 @@ class StudentHome extends State<StudentHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const StartPage(),
+                    builder: (context) => const LoginPage(userRole: 'student',),
                   ),
                 );
               },

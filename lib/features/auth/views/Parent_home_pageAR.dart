@@ -5,6 +5,7 @@ import '../../common/edit_profileAR_page.dart';
 import 'Parent_home_page.dart';
 import 'Parent_home_pageAR.dart';
 import '../../common/login_page.dart';
+import 'login_page_AR.dart';
 
 class ParentHomePageAR extends StatefulWidget {
   const ParentHomePageAR({super.key});
@@ -121,7 +122,7 @@ class _ParentHomePageARState extends State<ParentHomePageAR> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const LoginPage(userRole: 'parent'),
+                    builder: (context) => const LoginPageAR(userRole: 'parent'),
                   ),
                 );
               },

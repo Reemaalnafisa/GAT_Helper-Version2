@@ -13,6 +13,7 @@ class ResetPassWidget2 extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
 

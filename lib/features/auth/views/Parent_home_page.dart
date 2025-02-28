@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
+import 'DashBoard.dart';
 import 'Parent_home_pageAR.dart';
 import '../../common/login_page.dart';
 
@@ -16,7 +17,7 @@ class _ParentHomePageState extends State<ParentHomePage> {
   // List of children with their connection request status
   List<Map<String, String>> children = [
     {"name": "Nora Omar", "icon": "assets/img_21.png", "status": "approved"},
-    {"name": "Huda Omar", "icon": "assets/img_22.png", "status": "Pending"},
+    {"name": "Huda Omar", "icon": "assets/img_22.png", "status": "approved"},
     {"name": "Ali Saad", "icon": "assets/img_23.png", "status": "declined"},
   ];
 
@@ -324,7 +325,8 @@ class _ParentHomePageState extends State<ParentHomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ChildDashboardPage(childName: child["name"]!),
+                        builder: (context) => Dashboard(),
+                        //add child name of the dashboard
                       ),
                     );
                   },
@@ -425,20 +427,3 @@ class _ParentHomePageState extends State<ParentHomePage> {
   }
 }
 
-class ChildDashboardPage extends StatelessWidget {
-  final String childName;
-
-  const ChildDashboardPage({super.key, required this.childName});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('$childName Dashboard'),
-      ),
-      body: Center(
-        child: Text('Welcome to the dashboard of $childName'),
-      ),
-    );
-  }
-}

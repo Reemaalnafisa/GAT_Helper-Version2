@@ -234,14 +234,11 @@ class DashboardHeader extends StatelessWidget {
         ),
         Positioned(
           top: 33, // ✅ تحريك الأيقونة للأعلى قليلاً
-          right: 20,
+          left: 20,
           child: IconButton(
-            icon: Icon(Icons.arrow_forward, color: Colors.white, size: 30),
+            icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => StudentHomePage()),
-              );
+              Navigator.of(context).pop();
             },
           ),
         ),

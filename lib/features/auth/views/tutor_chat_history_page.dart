@@ -66,9 +66,20 @@ class ChatHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat History"),
-        backgroundColor: Color(0xFF284379),
+        title: Text("Chat History",style: TextStyle(color: Colors.white)),
+        flexibleSpace:Image.asset(
+          "assets/img_17.png",
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 120,
+        ),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

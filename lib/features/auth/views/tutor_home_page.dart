@@ -60,7 +60,9 @@ class _TutorHomepageState extends State<TutorHomepage> {
       question: "What is the capital of France?",
       options: ["Berlin", "Madrid", "Paris", "Rome"],
     ),
-  ];
+  ];String TutorName = "Khalid Naif"; // Replace with dynamic data
+  String TutorEmail = "Khalid.naif@example.com"; // Replace with dynamic data
+  String TutorAvatar = "assets/img_20.png"; // Replace
 
   @override
   Widget build(BuildContext context) {
@@ -72,43 +74,34 @@ class _TutorHomepageState extends State<TutorHomepage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color(0xFF284379),              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      size: 40,
-                      color: Color(0xFF284379),                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Khalid Naif',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'Tutor Homepage Sidebar',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+            SizedBox(
+              height: 250,
+              width: 500,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0xFF284379),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: AssetImage(TutorAvatar), // Dynamic Avatar
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      TutorName, // Dynamic Name
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      TutorEmail, // Dynamic Email
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
             ListTile(
@@ -461,24 +454,19 @@ class RequestDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
+
+        body: Column(
           children: [
             Stack(
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF284379),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
-                    ),
-                  ),
+                Image.asset(
+                  "assets/img_17.png",
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 120,
                 ),
                 Positioned(
-                  top: 20,
+                  top: 40,
                   left: 16,
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
@@ -558,7 +546,12 @@ class RequestDetailsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text('Reject'),
+                  child: Text(
+                    'Reject',
+                    style: TextStyle(
+                      color: Colors.white, // ✅ Fixed style syntax
+                    ),
+                  ),
                 ),
                 SizedBox(width: 20),
                 ElevatedButton(
@@ -570,14 +563,19 @@ class RequestDetailsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text('Accept'),
+                  child: Text(
+                    'Accept',
+                    style: TextStyle(
+                      color: Colors.white, // ✅ Fixed style syntax
+                    ),
+                  ),
+
                 ),
               ],
             ),
             SizedBox(height: 20),
           ],
         ),
-      ),
     );
   }
 
@@ -601,17 +599,45 @@ class RequestDetailsPage extends StatelessWidget {
   }
 }
 
-class AllRequestsPage extends StatelessWidget {
+
+class AllRequestsPage extends StatefulWidget {
   final List<StudentRequest> requests;
 
   const AllRequestsPage({Key? key, required this.requests}) : super(key: key);
 
   @override
+  _AllRequestsPageState createState() => _AllRequestsPageState();
+}
+
+class _AllRequestsPageState extends State<AllRequestsPage> {
+  late List<StudentRequest> requests;
+
+  @override
+  void initState() {
+    super.initState();
+    requests = List.from(widget.requests); // ✅ Copy initial requests list
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("All Requests"),
-        backgroundColor: Color(0xFF284379),
+        title: const Text(
+          "All Requests",
+          style: TextStyle(
+            color: Colors.white, // ✅ Ensures the text color is white
+          ),
+        ),
+        flexibleSpace: Image.asset(
+          "assets/img_17.png",
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 120,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),// ✅ Keeps the background color
       ),
       body: ListView.builder(
         itemCount: requests.length,
@@ -619,39 +645,24 @@ class AllRequestsPage extends StatelessWidget {
           final request = requests[index];
           return GestureDetector(
             onTap: () {
-              String studentName = request.name;
-              String preferredMethod = request.method;
-              // Navigate to RequestDetailsPage
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RequestDetailsPage5(
-                    studentName: studentName,  // ✅ Passing student's name
-                    preferredMethod: preferredMethod,  // ✅ Passing preferred method
-                    //this is n
-                    //request: request,
-                    //onReject: () {
-                    // Handle rejection (optional logic here)
-                    // Navigator.pop(context);
-                    // },
-                    // onAccept: () {
-                    // Handle acceptance and navigate accordingly
-                    // if (request.method == 'Chat') {
-                    //   Navigator.push(
-                    //  context,
-                    //  MaterialPageRoute(
-                    //   builder: (_) => ChatPage(),
-                    //  ),
-                    // );
-                    // } else if (request.method == 'Virtual') {
-                    //  Navigator.push(
-                    //   context,
-                    //  MaterialPageRoute(
-                    //     builder: (_) => SessionLinkPage(),
-                    //  ),
-                    // );
-                    // }
-                    // },
+                  builder: (context) => RequestDetailsPage(
+                    request: request,
+                    onReject: () {
+                      setState(() {
+                        requests.removeAt(index); // ✅ Update list on rejection
+                      });
+                      Navigator.pop(context); // ✅ Close details page
+                    },
+                    onAccept: () {
+                      if (request.method == 'Chat') {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => ChatPage()));
+                      } else if (request.method == 'Virtual') {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => SessionLinkPage()));
+                      }
+                    },
                   ),
                 ),
               );
@@ -766,6 +777,8 @@ class AllRequestsPage extends StatelessWidget {
     );
   }
 }
+
+
 
 class StudentRequest {
   final String name;

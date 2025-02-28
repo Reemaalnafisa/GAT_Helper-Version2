@@ -140,7 +140,7 @@ class ResetPassAR2 extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LoginPageAR(),
+                                  builder: (context) => const LoginPageAR(userRole: 'parent',),
                                 ),
                               );
                             },

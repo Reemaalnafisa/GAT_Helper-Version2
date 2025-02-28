@@ -261,7 +261,7 @@ class _SignUpPageState extends State<SignUpPageAR> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => const LoginPageAR(),
+                                      builder: (_) => const LoginPageAR(userRole: 'parent',),
                                     ),
                                   ),
                               ),

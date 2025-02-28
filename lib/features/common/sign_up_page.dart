@@ -4,6 +4,7 @@ import 'package:gat_helper_app/features/auth/views/student.dart';
 import 'package:gat_helper_app/features/common/login_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
 
+import '../auth/views/Parent_home_page.dart';
 import '../auth/views/Sign_up_page_AR.dart';
 import '../auth/views/tutor_home_page.dart';
 
@@ -28,6 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // Background Images in a Column
@@ -172,6 +174,12 @@ class _SignUpPageState extends State<SignUpPage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(builder: (_) => TutorHomepage()),
+                              );
+                            }
+                            else if (widget.userRole == 'parent') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => ParentHomePage()),
                               );
                             }
                           },

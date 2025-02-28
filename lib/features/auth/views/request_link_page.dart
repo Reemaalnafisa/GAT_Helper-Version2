@@ -16,17 +16,15 @@ class _SessionLinkPageState extends State<SessionLinkPage> {
           // Custom Rounded Header
           Stack(
             children: [
-              ClipPath(
-                clipper: CustomAppBarClipper(),
-                child: Container(
-                  height: 160,
-                  width: double.infinity,
-                  color: Colors.blue,
-                ),
+              Image.asset(
+                "assets/img_17.png",
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 120,
               ),
               Positioned(
-                top: 70,
-                left: 20,
+                top: 45,
+                left: 125,
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -43,6 +41,16 @@ class _SessionLinkPageState extends State<SessionLinkPage> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Positioned(
+                top: 40,
+                left: 16,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
             ],

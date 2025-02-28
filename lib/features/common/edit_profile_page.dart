@@ -103,7 +103,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },

@@ -7,7 +7,8 @@ import 'package:gat_helper_app/features/auth/views/login_page_AR.dart';
 import 'package:gat_helper_app/features/common/sign_up_page.dart';
 
 import '../auth/views/Parent_home_page.dart';
-import '../auth/views/Sign_up_page_AR.dart'; // Ensure this is imported
+import '../auth/views/Sign_up_page_AR.dart';
+import '../auth/views/tutor_home_page.dart'; // Ensure this is imported
 
 class LoginPage extends StatefulWidget {
   final String userRole; // Add user role
@@ -42,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // Top Background
@@ -180,9 +182,24 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.maxFinite,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (_) => const StudentHomePage()),);
+                            // Navigate to the corresponding home page based on the userRole
+                            if (widget.userRole == 'student') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => const StudentHomePage()),
+                              );
+                            } else if (widget.userRole == 'tutor') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => TutorHomepage()),
+                              );
+                            }
+                            else if (widget.userRole == 'parent') {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => ParentHomePage()),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black87,
@@ -245,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                     iconSize: 40, // Smaller size
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (_) => const LoginPageAR()),
+                        MaterialPageRoute(builder: (_) => const LoginPageAR(userRole: 'parent',)),
                       );
                     },
                   ),
