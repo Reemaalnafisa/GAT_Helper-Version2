@@ -45,7 +45,7 @@ class _SelfgameconfigWidgetState extends State<SelfgameconfigWidget> {
               child: Icon(
                 Icons.arrow_back,
                 size: screenWidth * 0.08,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
           ),
