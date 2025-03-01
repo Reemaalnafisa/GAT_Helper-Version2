@@ -25,28 +25,24 @@ class _SelfgameconfigWidgetState extends State<SelfgameconfigWidget> {
             left: -screenWidth * 0.8,
             right: -screenWidth * 0.8,
             child: Image.asset(
-              'assets/upblue_background.png',
+              'assets/img_12.png',
               fit: BoxFit.cover,
               width: screenWidth * 2.4,
               height: screenHeight * 0.40,
             ),
           ),
-          // Back Arrow
+
+
+
+          // ✅ Back Button Positioned on Top of the Image
           Positioned(
-            top: screenHeight * 0.03,
-            left: screenWidth * 0.03,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => StudentHomePage()), // Replace 'YourTargetPage' with the actual page you want to navigate to
-                );
+            top: 50,
+            left: 20,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
+              onPressed: () {
+                Navigator.pop(context);
               },
-              child: Icon(
-                Icons.arrow_back,
-                size: screenWidth * 0.08,
-                color: Colors.white,
-              ),
             ),
           ),
           // Bottom Backgrounds

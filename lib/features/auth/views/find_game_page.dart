@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/custom_group_game_page.dart';
-
 import 'GG_waiting.dart';
 import 'Ques_group.dart';
 
@@ -30,27 +29,32 @@ class _GroupGamePageState extends State<GroupGamePage2> {
           Stack(
             children: [
               // ✅ Background Image
-              Image.asset(
-                'assets/img.png',
-                width: double.infinity,
-                fit: BoxFit.cover,
+                Image.asset(
+                  'assets/img_3.png',
+                  width: double.infinity,
+                  height: 170, // يمكنك تعديل الارتفاع هنا حسب الحاجة
+                  fit: BoxFit.cover,
+
+
               ),
 
               // ✅ Back Button Positioned on Top of the Image
               Positioned(
-                top: 40, // Adjust for better placement
-                left: 16,
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context), // Navigate back
-                  child:Icon(Icons.arrow_back, color: Colors.black, size: 24),
-                  ),
+                top: 50,
+                left: 20,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.black, size: 30),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
+              ),
             ],
           ),
 
           // ✅ Title + Input Field + "+" Button
           Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+            padding: const EdgeInsets.only(top: 20, left: 16.0, right: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/AR_dashboard.dart';
+import 'package:gat_helper_app/features/auth/views/Parent_DashBoard.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
 import '../../common/edit_profileAR_page.dart';
 import 'Parent_home_page.dart';
@@ -324,18 +325,24 @@ class _ParentHomePageARState extends State<ParentHomePageAR> {
                 title: Text(
                   child["name"]!,
                   style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                trailing: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ARDashboard(),
+                ), trailing: GestureDetector(
+                onTap: () {
+                  // إرسال اسم الطفل والبريد الإلكتروني إلى ParentDashboard
+                  String studentName = child["name"]!;  // اسم الطفل
+                  String studentEmail = child["email"] ?? "No email";  // البريد الإلكتروني إذا كان موجود
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ParentDashboard(),
+                      settings: RouteSettings(
+                        arguments: {'name': studentName, 'email': studentEmail},
                       ),
-                    );
-                  },
-                  child: const Icon(Icons.bar_chart, color: Colors.grey),
-                ),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.bar_chart, color: Colors.grey),
+              ),
               ),
             );
           }).toList(),

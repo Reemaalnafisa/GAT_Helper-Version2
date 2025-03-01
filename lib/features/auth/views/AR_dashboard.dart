@@ -13,7 +13,18 @@ class ARDashboard extends StatefulWidget {
 class _DashboardState extends State<ARDashboard> {
   final LineData data = LineData();
   int selectedMonthIndex = 0;
-
+  String studentName = '';
+  String studentEmail = '';
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // استلام البيانات المرسلة عبر Navigator
+    final arguments = ModalRoute.of(context)?.settings.arguments as Map<String, String>?;
+    if (arguments != null) {
+      studentName = arguments['name'] ?? 'Unknown';
+      studentEmail = arguments['email'] ?? 'Unknown';
+    }
+  }
   void nextMonth() {
     setState(() {
       if (selectedMonthIndex < data.months.length - 1) {
@@ -45,7 +56,7 @@ class _DashboardState extends State<ARDashboard> {
                   child: Column(
                     children: [
 
-                      DashboardHeader(),
+                      DashboardHeader(studentName: studentName),
                       SizedBox(height: 15),
                       Row(
                         children: [
@@ -83,6 +94,9 @@ class _DashboardState extends State<ARDashboard> {
 
 /// Header of the Dashboard
 class DashboardHeader extends StatelessWidget {
+  final String studentName;
+
+  const DashboardHeader({required this.studentName});
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -107,16 +121,29 @@ class DashboardHeader extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 88,
+          top: 70,
           right: 28,
-          child: Text(
-            'لوحة القيادة', // تغيير العنوان إلى العربية
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Montserrat',
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'DashBoard',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                '$studentName',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+            ],
           ),
         ),
       ],

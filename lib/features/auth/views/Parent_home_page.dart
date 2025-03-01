@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/Parent_DashBoard.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
 import 'DashBoard.dart';
 import 'Parent_home_pageAR.dart';
@@ -322,16 +323,24 @@ class _ParentHomePageState extends State<ParentHomePage> {
                 ),
                 trailing: GestureDetector(
                   onTap: () {
+                    // إرسال اسم الطفل والبريد الإلكتروني إلى ParentDashboard
+                    String studentName = child["name"]!;  // اسم الطفل
+                    String studentEmail = child["email"] ?? "No email";  // البريد الإلكتروني إذا كان موجود
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Dashboard(),
-                        //add child name of the dashboard
+                        builder: (context) => ParentDashboard(),
+                        settings: RouteSettings(
+                          arguments: {'name': studentName, 'email': studentEmail},
+                        ),
                       ),
                     );
                   },
                   child: const Icon(Icons.bar_chart, color: Colors.grey),
                 ),
+
+
               ),
             );
           }).toList(),

@@ -24,13 +24,15 @@ class _CustomizeGamePageState extends State<CustomizeGamePage> {
         children: [
           // ✅ Background Image
           Positioned(
-            top: -40,
+            top: -10,
             left: 0,
             right: 0,
-            child: Image.asset(
-              'assets/img.png',
+            child:  Image.asset(
+              'assets/img_3.png',
               width: double.infinity,
+              height: 190, // يمكنك تعديل الارتفاع هنا حسب الحاجة
               fit: BoxFit.cover,
+
             ),
           ),
 

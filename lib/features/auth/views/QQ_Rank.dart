@@ -423,19 +423,6 @@ class _RankPageState extends State<RankPage> {
           top: 20,
           left: 10,
           child: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white, size: 35),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => StudentHomePage()),
-              );
-            },
-          ),
-        ),
-        Positioned(
-          top: 20,
-          right: 10,
-          child: IconButton(
             icon: Icon(Icons.refresh, color: Colors.white, size: 35),
             onPressed: () {
               Navigator.push(
@@ -445,6 +432,24 @@ class _RankPageState extends State<RankPage> {
             },
           ),
         ),
+        Positioned(
+          top: 10,
+          right: 10,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.blue,
+              backgroundColor: Colors.white,// تحديد اللون الخلفي للزر باستخدام الكود السداسي
+            ),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => StudentHomePage()), // Replace 'YourTargetPage' with the actual page widget
+              );
+            },
+            child: Text('Done'),
+          ),
+        )
+
       ],
     );
   }

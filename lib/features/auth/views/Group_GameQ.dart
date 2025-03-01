@@ -37,8 +37,8 @@ class _GroupGamePageWidgetState extends State<GroupGamePageWidget> {
   void initState() {
     super.initState();
     userAnswers = List<String?>.filled(questions.length, null);
-    minutes = 0; // Set initial minutes for the timer
-    seconds = 10;
+    minutes = 10; // Set initial minutes for the timer
+    seconds = 0;
 
     // Start the timer
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -218,12 +218,12 @@ class _GroupGamePageWidgetState extends State<GroupGamePageWidget> {
         children: [
           // Background
           Positioned(
-            bottom: screenHeight * 0.02,
+            bottom: screenHeight * 0,
             left: -screenWidth * 0.1,
             right: -screenWidth * 0.1,
             child: Image.asset(
-              'assets/yellow_background.png',
               fit: BoxFit.cover,
+              'assets/downgreen_background.png',
               width: screenWidth * 1.2,
               height: screenHeight * 0.4,
             ),
@@ -260,10 +260,7 @@ class _GroupGamePageWidgetState extends State<GroupGamePageWidget> {
                 showExitConfirmationDialog(); // Show the confirmation dialog
               },
               child: Icon(
-                Icons.arrow_back, // Use the exit icon
-                size: screenWidth * 0.1, // Adjust the icon size
-                color: Colors.redAccent, // Set the icon color
-              ),
+                  Icons.exit_to_app, color: Colors.redAccent, size: 30),
             ),
           ),
 

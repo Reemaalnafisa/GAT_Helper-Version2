@@ -76,7 +76,7 @@ class _StudentreqState extends State<Studentreq> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.black, size: 30.0),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -201,7 +201,7 @@ class _StudentreqState extends State<Studentreq> {
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightGreen, // Green color
+                            backgroundColor:  Color(0xFFD6DE97),  // Green color
                             minimumSize: const Size(200, 50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),

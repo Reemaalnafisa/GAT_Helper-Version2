@@ -16,7 +16,6 @@ dependencies:
   sqflite: ^2.3.0  # ✅ SQLite database for Flutter
   path_provider: ^2.0.15
   confetti: 0.8.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -80,5 +79,8 @@ flutter:
     - assets/img_23.png
     - assets/img_24.png
     - assets/img_25.png
-    - assets/
+    - assets/img_26.png
+    - assets/img_27.png
+    - assets/img_28.png
+    - assets/img.png
     - assets/BlueNew.png
