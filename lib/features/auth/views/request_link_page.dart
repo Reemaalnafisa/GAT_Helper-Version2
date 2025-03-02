@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gat_helper_app/features/auth/views/tutor_home_page.dart';
 
 class SessionLinkPage extends StatefulWidget {
   @override
@@ -105,7 +106,7 @@ class _SessionLinkPageState extends State<SessionLinkPage> {
 
           SizedBox(height: 40), // Space before button
 
-          // Send Button
+          // Send Button (Fixed Syntax)
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFFE8F1AE), // Light Yellow Color
@@ -115,7 +116,20 @@ class _SessionLinkPageState extends State<SessionLinkPage> {
               ),
             ),
             onPressed: () {
-              // Action for sending the link
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Link sent successfully!'),
+                  duration: Duration(seconds: 2), // How long the message is displayed
+                ),
+              );
+
+              // Delay the navigation so the user sees the notification first
+              Future.delayed(Duration(seconds: 2), () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => TutorHomepage()), // Replace with your target page
+                );
+              });
             },
             child: Text(
               "Send",
@@ -126,21 +140,4 @@ class _SessionLinkPageState extends State<SessionLinkPage> {
       ),
     );
   }
-}
-
-// Custom Clipper for Rounded AppBar
-class CustomAppBarClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 40);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 40);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
