@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gat_helper_app/features/auth/views/Student_chat_page.dart';
 import 'package:gat_helper_app/features/auth/views/request_link_page.dart';
-import 'package:gat_helper_app/features/auth/views/tutor_request_details_page.dart';
 import 'package:gat_helper_app/features/common/edit_profile_page.dart';
 import 'package:gat_helper_app/features/auth/views/tutor_chat_history_page.dart';
 import 'package:gat_helper_app/features/common/start_page.dart';
@@ -60,9 +59,7 @@ class _TutorHomepageState extends State<TutorHomepage> {
       question: "What is the capital of France?",
       options: ["Berlin", "Madrid", "Paris", "Rome"],
     ),
-  ];String TutorName = "Khalid Naif"; // Replace with dynamic data
-  String TutorEmail = "Khalid.naif@example.com"; // Replace with dynamic data
-  String TutorAvatar = "assets/img_20.png"; // Replace
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,34 +71,43 @@ class _TutorHomepageState extends State<TutorHomepage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 250,
-              width: 500,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Color(0xFF284379),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage(TutorAvatar), // Dynamic Avatar
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      TutorName, // Dynamic Name
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      TutorEmail, // Dynamic Email
-                      style: const TextStyle(fontSize: 16, color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF284379),              ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.person,
+                      size: 40,
+                      color: Color(0xFF284379),                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Khalid Naif',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        'Tutor Homepage Sidebar',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             ListTile(
@@ -289,95 +295,89 @@ class _TutorHomepageState extends State<TutorHomepage> {
                               ),
                             ],
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          child: Stack(
                             children: [
-                              CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.white,
-                                child: Icon(
-                                  Icons.person,
-                                  size: 30,
-                                  color: Colors.grey.shade600,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Stack(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        // Name (Always on Left)
-                                        Text(
-                                          request.name,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        // Grade (Below Name, Still Left-Aligned)
-                                        Text(
-                                          request.grade,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        // Question Count & Chat Method Row
-                                        Row(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.question_answer, size: 16),
-                                                const SizedBox(width: 4),
-                                                Text("${request.questionCount}"),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 16),
-                                            Row(
-                                              children: [
-                                                const Icon(Icons.chat, size: 16),
-                                                const SizedBox(width: 4),
-                                                Text(request.method),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                              // Main Content of the Card
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    request.name,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
                                     ),
-
-                                    // ✅ Fix: Date/Time moved to Right (Properly)
-                                    Positioned(
-                                      top: 0, // Ensures it's at the top
-                                      right: 0, // ✅ Now it stays on the right dynamically
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min, // Keeps it compact
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    request.grade,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Row(
                                         children: [
-                                          Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
-                                          const SizedBox(width: 4),
+                                          Icon(Icons.question_answer, size: 16, color: Colors.black87),
+                                          SizedBox(width: 4),
                                           Text(
-                                            request.time,
+                                            "${request.questionCount} Questions",
                                             style: TextStyle(
                                               fontSize: 14,
-                                              color: Colors.grey.shade600,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black87,
                                             ),
                                           ),
                                         ],
                                       ),
+                                      SizedBox(width: 16),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.chat, size: 16, color: Colors.black87),
+                                          SizedBox(width: 4),
+                                          Text(
+                                            request.method,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+
+                                        ],
+
+                                      ),
+
+                                    ],
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 20,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                              // Time Positioned in the Upper Right
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      request.time,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade600,
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-
-
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                size: 20,
-                                color: Colors.grey,
                               ),
                             ],
                           ),
@@ -385,7 +385,6 @@ class _TutorHomepageState extends State<TutorHomepage> {
                       );
                     },
                   ),
-
                 ),
               ],
             ),
@@ -454,19 +453,24 @@ class RequestDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
-        body: Column(
+      body: SafeArea(
+        child: Column(
           children: [
             Stack(
               children: [
-                Image.asset(
-                  "assets/img_17.png",
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 120,
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF284379),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50),
+                    ),
+                  ),
                 ),
                 Positioned(
-                  top: 40,
+                  top: 20,
                   left: 16,
                   child: IconButton(
                     icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
@@ -546,12 +550,7 @@ class RequestDetailsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text(
-                    'Reject',
-                    style: TextStyle(
-                      color: Colors.white, // ✅ Fixed style syntax
-                    ),
-                  ),
+                  child: Text('Reject'),
                 ),
                 SizedBox(width: 20),
                 ElevatedButton(
@@ -563,19 +562,14 @@ class RequestDetailsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text(
-                    'Accept',
-                    style: TextStyle(
-                      color: Colors.white, // ✅ Fixed style syntax
-                    ),
-                  ),
-
+                  child: Text('Accept'),
                 ),
               ],
             ),
             SizedBox(height: 20),
           ],
         ),
+      ),
     );
   }
 
@@ -599,45 +593,17 @@ class RequestDetailsPage extends StatelessWidget {
   }
 }
 
-
-class AllRequestsPage extends StatefulWidget {
+class AllRequestsPage extends StatelessWidget {
   final List<StudentRequest> requests;
 
   const AllRequestsPage({Key? key, required this.requests}) : super(key: key);
 
   @override
-  _AllRequestsPageState createState() => _AllRequestsPageState();
-}
-
-class _AllRequestsPageState extends State<AllRequestsPage> {
-  late List<StudentRequest> requests;
-
-  @override
-  void initState() {
-    super.initState();
-    requests = List.from(widget.requests); // ✅ Copy initial requests list
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "All Requests",
-          style: TextStyle(
-            color: Colors.white, // ✅ Ensures the text color is white
-          ),
-        ),
-        flexibleSpace: Image.asset(
-          "assets/img_17.png",
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: 120,
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),// ✅ Keeps the background color
+        title: const Text("All Requests"),
+        backgroundColor: Color(0xFF284379),
       ),
       body: ListView.builder(
         itemCount: requests.length,
@@ -645,22 +611,32 @@ class _AllRequestsPageState extends State<AllRequestsPage> {
           final request = requests[index];
           return GestureDetector(
             onTap: () {
+              // Navigate to RequestDetailsPage
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => RequestDetailsPage(
                     request: request,
                     onReject: () {
-                      setState(() {
-                        requests.removeAt(index); // ✅ Update list on rejection
-                      });
-                      Navigator.pop(context); // ✅ Close details page
+                      // Handle rejection (optional logic here)
+                      Navigator.pop(context);
                     },
                     onAccept: () {
+                      // Handle acceptance and navigate accordingly
                       if (request.method == 'Chat') {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => ChatPage()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChatPage(),
+                          ),
+                        );
                       } else if (request.method == 'Virtual') {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => SessionLinkPage()));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => SessionLinkPage(),
+                          ),
+                        );
                       }
                     },
                   ),
@@ -749,8 +725,8 @@ class _AllRequestsPageState extends State<AllRequestsPage> {
                 ),
                 // Timer in the upper right corner
                 Positioned(
-                  top: 25,
-                  right: 45,
+                  top: 12,
+                  right: 24,
                   child: Row(
                     children: [
                       Icon(
@@ -778,8 +754,6 @@ class _AllRequestsPageState extends State<AllRequestsPage> {
   }
 }
 
-
-
 class StudentRequest {
   final String name;
   final String grade;
@@ -791,13 +765,13 @@ class StudentRequest {
   final List<String> options;
 
   StudentRequest({
-    required this.name,
-    required this.grade,
-    required this.time,
-    required this.method,
-    required this.questionCount,
-    required this.color,
-    required this.question,
-    required this.options,
+  required this.name,
+  required this.grade,
+  required this.time,
+  required this.method,
+  required this.questionCount,
+  required this.color,
+  required this.question,
+  required this.options,
   });
 }
